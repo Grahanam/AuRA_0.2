@@ -15,7 +15,7 @@ export const playerSlice=createSlice({
     reducers:{
         loadmusic:(state,action)=>{
             // state.track=action.payload
-            state.playlist=state.queue
+            // state.playlist=state.queue
             state.playlist.push(action.payload)
             state.currenttrack=0
             state.track=state.playlist[state.currenttrack]

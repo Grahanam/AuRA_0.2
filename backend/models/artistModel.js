@@ -5,11 +5,18 @@ const artistSchema=new mongoose.Schema({
         type:String,
     },
     picture:{
-        type:String,
+        url:{
+            type:String,
+        },
+        filepath:{
+            type:String,
+        }
     },
-    filepath:{
+    type:{
         type:String,
+        default:'artist'
     }
+    
 })
 
 module.exports=mongoose.model('Artist',artistSchema)

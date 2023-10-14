@@ -5,16 +5,20 @@ const trackSchema=new mongoose.Schema({
         type:String
     },
     picture:{
-        type:String
-    },
-    picturepath:{
-        type:String
+        url:{
+            type:String
+        },
+        filepath:{
+            type:String
+        }
     },
     audio:{
-        type:String
-    },
-    audiopath:{
-        type:String
+        url:{
+            type:String
+        },
+        filepath:{
+            type:String
+        }
     },
     duration:{
         type:Number
@@ -30,7 +34,19 @@ const trackSchema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Genre'
         }
-    ]
+    ],
+    album:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Album'
+    },
+    track_number:{
+        type:Number,
+        default:0
+    },
+    type:{
+        type:String,
+        default:'track'
+    }
 })
 
 module.exports=mongoose.model('Track',trackSchema)

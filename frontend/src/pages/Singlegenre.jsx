@@ -15,6 +15,7 @@ const SingleGenre=({user,access,getlocation})=>{
     const params=useParams()
     const dispatch=useDispatch()
     const {genre,tracks}=useSelector((state)=>state.genre)
+      
 
     // let getgenre=async()=>{
     //     const config = {
@@ -56,8 +57,8 @@ const SingleGenre=({user,access,getlocation})=>{
     },[])
     return(
         <>
-        <div className='h-52 md:h-96 lg:h-96 bg-fixed bg-no-repeat bg-cover bg-bottom' style={{backgroundImage:`url(${genre.picture})`}}>
-            <div className='mt-2  md:ml-4 lg:ml-4 flex flex-col justify-end items-start p-9'>
+        <div className='h-52 md:h-96 lg:h-96 w-[100%] bg-fixed bg-no-repeat bg-contain bg-black bg-opacity-25  bg-center' style={{backgroundImage:`url(${genre.picture?.url})`}}>
+            <div className='mt-2  md:ml-4 lg:ml-4 flex flex-col bg-black bg-opacity-25 h-full justify-end items-start p-9'>
                 <h1 className='text-m font-semibold text-white tracking-wide'>GENRE</h1>
                 <h1 className='text-4xl md:text-6xl lg:text-8xl font-extrabold text-white tracking-wide pb-5'>{genre.title}</h1>
                 <h2 className='text-sm text-lightest tracking-wide'></h2>

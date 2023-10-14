@@ -47,9 +47,9 @@ const Genre=({access})=>{
                 <div className='w-full flex flex-wrap'>
                     {genres.map((genre,index)=>(
                         <Link key={index} to={`/genre/${genre._id}`}>
-                        <div className='h-24 w-24 md:h-44 md:w-44 lg:h-44 lg:w-44 m-1 md:m-4 lg:m-4 rounded'>
-                          <div className='h-full w-full bg-no-repeat bg-cover bg-center rounded'  style={{backgroundImage:`url(${genre.picture}`}}>
-                            <h1 className='text-lg md:text-2xl lg:text-2xl p-2 text-white'>{genre.title }</h1></div>
+                        <div className='h-24 w-24 md:h-44 md:w-44 lg:h-44 lg:w-44 m-1 md:m-4 lg:m-4 rounded '>
+                          <div  className='h-full w-full bg-no-repeat bg-cover bg-center rounded'  style={{backgroundImage:`url(${genre.picture?.url}`}}>
+                            <h1 className='text-lg md:text-2xl lg:text-2xl p-2 text-white bg-black bg-opacity-30 h-full rounded'>{genre.title }</h1></div>
                           <div className=''></div>
                         </div>
                         </Link>

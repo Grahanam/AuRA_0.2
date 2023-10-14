@@ -8,6 +8,7 @@ import Musicplayer from '../containers/musicplayer/musicplayer'
 import Singleplaylist from '../pages/Singleplaylist'
 import SingleArtist from '../pages/Singleartist'
 import SingleGenre from '../pages/Singlegenre'
+import SingleAlbum from '../pages/Singlealbum'
 
 const  Aura=()=>{
     return(
@@ -26,6 +27,8 @@ const  Aura=()=>{
               <Route path="/playlist/:id" exact element={<Singleplaylist/>}/>
               <Route path="/artist/:id" exact element={<SingleArtist/>}/>
               <Route path="/genre/:id" exact element={<SingleGenre/>}/>
+              <Route path="/album/:id" exact element={<SingleAlbum/>}/>
+              
               {/* <Route path="/search" exact element={<PrivateRoute><Search/></PrivateRoute>}/>
               <Route path="/yourlibrary" exact element={<PrivateRoute><YourLibrary/></PrivateRoute>}/>
               <Route path="/like" exact element={<PrivateRoute><Like/></PrivateRoute>}/>

@@ -3,7 +3,7 @@ import React,{useEffect,useState} from 'react'
 // import { getlocation } from '../actions/auth'
 
 import { useSelector, useDispatch } from 'react-redux'
-import {fetchArtistSearch,fetchTrackSearch} from '../actions/search/searchaction'
+import {fetchAlbumSearch, fetchArtistSearch,fetchTrackSearch} from '../actions/search/searchaction'
 import {loadmusic} from '../features/player/playerSlice'
 
 import {Link} from 'react-router-dom'
@@ -16,7 +16,7 @@ const Search=({getlocation,songresult,artistresult,access})=>{
     let [artist,setartist]=useState([])
     let [songs,setsong]=useState([])
     const {track,playlist}=useSelector((state)=>state.player)
-    const {artists,tracks,searchquery,artistloading,artisterror,trackloading,tracterror} = useSelector((state) => state.search)
+    const {artists,tracks,albums,searchquery,artistloading,artisterror,trackloading,tracterror} = useSelector((state) => state.search)
     const dispatch = useDispatch()
     // getlocation() 
     let getartists=async()=>{
@@ -54,6 +54,7 @@ const Search=({getlocation,songresult,artistresult,access})=>{
     useEffect(()=>{
         dispatch(fetchArtistSearch(searchquery))
         dispatch(fetchTrackSearch(searchquery))
+        dispatch(fetchAlbumSearch(searchquery))
 
     },[searchquery])
     
@@ -100,9 +101,9 @@ const Search=({getlocation,songresult,artistresult,access})=>{
                         <Link key={index} to={`/artist/${artist._id}`} >
                           <div className='p-2 w-36 md:w-48 lg:w-48'>
                               <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={artist.picture} alt='cover' className='h-auto w-full shadow mb-2'/>
+                                <img src={artist.picture?.url} alt='cover' className='h-auto w-full shadow mb-2'/>
                                 <h1 className='text-white text-sm md:text-md lg:text-md tracking-wide font-semibold'>{artist.name}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide pb-1'>Artist</h2>   
+                                <h2 className='text-xs text-lightest tracking-wide pb-1'>{artist.type}</h2>   
                               </div>
                           </div>
                         </Link>
@@ -110,7 +111,27 @@ const Search=({getlocation,songresult,artistresult,access})=>{
          </div>
          </div>
          </div>):(<></>)} 
-            
+
+         {albums.length>0 ?(<div className='px-1 py-1 md:px-6 md:py-3 lg:px-6 lg:py-3'>    
+                <div>
+                    <div>
+                        <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Album</h1>
+                    </div>
+                    <div className="w-full flex flex-wrap">
+                    {albums.map((album,index)=>(
+                        <Link key={index} to={`/album/${album._id}`} >
+                          <div className='p-2 w-36 md:w-48 lg:w-48'>
+                              <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
+                                <img src={album.picture?.url} alt='cover' className='h-auto w-full shadow mb-2'/>
+                                <h1 className='text-white text-sm md:text-md lg:text-md tracking-wide font-semibold'>{album.name}</h1>
+                                <h2 className='text-xs text-lightest tracking-wide pb-1'>{album.album_type}</h2>   
+                              </div>
+                          </div>
+                        </Link>
+                    ))}
+         </div>
+         </div>
+         </div>):(<></>)} 
          
          </>
          ):(

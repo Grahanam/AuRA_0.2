@@ -21,13 +21,15 @@ const artistModel=require('../models/artistModel')
 router.post('/',upload.single('file'),async(req,res)=>{
     try{
         const file = req.file;
-        const filename = `aura/artist_pic/${Date.now()}_${req.file.originalname}`;
+        const filename = `aura/artist_img/${Date.now()}_${req.file.originalname}`;
         const uuid=UUID()
         const fileURL = await uploadFile(req.file.buffer, filename, req.file.mimetype,uuid);
         const artist=new artistModel({
         name:req.body.name,
-        picture:fileURL,
-        filepath:filename,
+        picture:{
+               url:fileURL,
+               filepath:filename
+        }
         })
         await artist.save()
         res.status(200).json({message:'Artist Saved successfully'})

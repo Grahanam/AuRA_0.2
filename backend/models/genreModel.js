@@ -5,10 +5,16 @@ const genreSchema=new mongoose.Schema({
         type:String,
     },
     picture:{
-        type:String,
+        url:{
+            type:String,
+        },
+        filepath:{
+            type:String,
+        }
     },
-    filepath:{
+    type:{
         type:String,
+        default:'genre'
     }
 })
 

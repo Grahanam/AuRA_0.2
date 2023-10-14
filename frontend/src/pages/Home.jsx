@@ -83,7 +83,7 @@ const Home=({getlocation,access})=>{
                         <Link key={index} to={`/artist/${artist._id}`} >
                           <div className='p-2 w-48'>
                               <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={artist.picture} className='h-auto w-full shadow mb-2'/>
+                                <img src={artist.picture?.url} className='h-auto w-full shadow mb-2'/>
                                 <h1 className='text-white text-md tracking-wide font-semibold'>{artist.name}</h1>
                                 <h2 className='text-xs text-lightest tracking-wide pb-1'>Artist</h2>   
                               </div>

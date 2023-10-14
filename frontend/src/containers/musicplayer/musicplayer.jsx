@@ -43,10 +43,17 @@ const Musicplayer=()=>{
                     <div className=' rounded-lg shadow-md hover:bg-light flex md:flex-row'>
                         <div className='hidden md:flex md:w-3/12 lg:flex flex flex-row items-center '>
                             {track.picture?<>
-                                <img src={track.picture} alt="coverimg" className='h-7 md:h-12 lg:h-12 w-auto shadow'/>
+                                <img src={track.picture?.url} alt="coverimg" className='h-7 md:h-12 lg:h-12 w-auto shadow'/>
                             <div className='m-2 items-start'>
                                 <h1 className='text-m font-semibold text-white tracking-wide'>{track.name}</h1>
-                                <h2 className='text-sm text-lightest tracking-wide pb-0'></h2>
+                                <h2 className='text-sm text-lightest tracking-wide pb-0'> 
+                                {track.artist?.map((name,index)=>(
+                                        <span key={index}> 
+                                            {name.name}
+                                            {index!==track.artist?.length-1 && <span>,</span>} 
+                                        </span>
+                                    ))}
+                                </h2>
                             </div>
                             </>:<>
                             <div className='flex items-center justify-center h-7 md:h-12 lg:h-12 w-12 shadow bg-gray-700'><i><FontAwesomeIcon icon={faMusic}></FontAwesomeIcon></i></div>
@@ -56,7 +63,7 @@ const Musicplayer=()=>{
                         <div className='w-full md:w-9/12'>
                             {/* <ReactAudioPlayer className='bg-neutral-700 rounded w-full' src={playlist[currenttrack].audio} autoPlay controls/>  */}
                             {track.audio?<>
-                                <Audioplayer className=' ' src={track.audio} showSkipControls onClickNext={()=> dispatch(handlenext())} onClickPrevious={()=>dispatch(handleprevious)} onEnded={()=>dispatch(handleEnd)} />  
+                                <Audioplayer className=' ' src={track.audio?.url} showSkipControls onClickNext={()=> dispatch(handlenext())} onClickPrevious={()=>dispatch(handleprevious)} onEnded={()=>dispatch(handleEnd)} />  
                             </>:<>
                             <Audioplayer  />  
                             </>}

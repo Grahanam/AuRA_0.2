@@ -54,7 +54,7 @@ router.post('/',upload.single('file'),async(req,res)=>{
     try{
         const file = req.file;
         // console.log(file)
-        const filename = `aura/genre_pic/${Date.now()}_${req.file.originalname}`;
+        const filename = `aura/genre_img/${Date.now()}_${req.file.originalname}`;
         const uuid=UUID()
         const fileURL = await uploadFile(req.file.buffer, filename, req.file.mimetype,uuid);
         //unique filename
@@ -62,8 +62,10 @@ router.post('/',upload.single('file'),async(req,res)=>{
         //genre object
         const genre=new genreModel({
         title:req.body.title,
-        picture:fileURL,
-        filepath:filename
+        picture:{
+               url:fileURL,
+               filepath:filename
+        }
         })
         //console.log(genre)
         //saving object to database

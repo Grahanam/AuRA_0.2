@@ -16,6 +16,7 @@ const trackRoute=require('./routes/trackRoute')
 const artistRoute=require('./routes/artistRoute')
 const genreRoute=require('./routes/genreRoute')
 const playlistRoute=require('./routes/playlistRoute')
+const albumRoute=require('./routes/albumRoute')
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
@@ -27,6 +28,7 @@ app.use('/track',trackRoute)
 app.use('/genre',genreRoute)
 app.use('/artist',artistRoute)
 app.use('/playlist',playlistRoute)
+app.use('/album',albumRoute)
 
 //starting server  
 app.listen(port,()=>{

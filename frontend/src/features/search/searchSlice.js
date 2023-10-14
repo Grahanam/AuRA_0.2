@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { fetchArtistSearch,fetchTrackSearch } from '../../actions/search/searchaction'
+import { fetchArtistSearch,fetchTrackSearch,fetchAlbumSearch} from '../../actions/search/searchaction'
 
 
 export const searchSlice=createSlice({
@@ -7,11 +7,15 @@ export const searchSlice=createSlice({
     initialState:{
         artists:[],
         tracks:[],
+        albums:[],
         searchquery:'',
         artistloading:false,
         artisterror:null,
         trackloading:false,
-        trackerror:null
+        trackerror:null,
+        albumloading:false,
+        albumerror:null
+        
     },
     reducers:{
         getquery:(state,action)=>{
@@ -44,6 +48,19 @@ export const searchSlice=createSlice({
         .addCase(fetchTrackSearch.rejected,(state,action)=>{
             state.trackloading=false
             state.trackerror=action.error.message;
+        })
+
+        .addCase(fetchAlbumSearch.pending,(state)=>{
+            state.albumloading=true
+            state.albumerror=null
+        })
+        .addCase(fetchAlbumSearch.fulfilled,(state,action)=>{
+            state.albumloading=false
+            state.albums=action.payload;
+        })
+        .addCase(fetchAlbumSearch.rejected,(state,action)=>{
+            state.albumloading=false
+            state.albumerror=action.error.message;
         })
     }
 }

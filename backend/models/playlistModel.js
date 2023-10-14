@@ -5,10 +5,12 @@ const playlistSchema=new mongoose.Schema({
         type:String
     },
     picture:{
-        type:String
-    },
-    filepath:{
-        type:String
+        url:{
+            type:String
+        },
+        filepath:{
+            type:String
+        }, 
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
@@ -19,7 +21,11 @@ const playlistSchema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Track'
         }
-    ]
+    ],
+    type:{
+        type:String,
+        default:'playlist'
+    }
 })
 
 module.exports=mongoose.model('Playlist',playlistSchema)

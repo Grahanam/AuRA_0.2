@@ -24,14 +24,12 @@ router.post('/',upload.fields([
     {name:'audio',maxCount:1},
 ]),async(req,res)=>{
     try{
-        console.log(req.body)
+        // console.log(req.body)
         const file = req.files;
         const picture=file.picture[0]
         const audio=file.audio[0]
 
-        
-
-        let picturefileName = `aura/track_pic/${Date.now()}_${picture.originalname}`;
+        let picturefileName = `aura/track_img/${Date.now()}_${picture.originalname}`;
         let audiofileName=`aura/track_audio/${Date.now()}_${audio.originalname}`;
 
         const picuuid=UUID()
@@ -43,15 +41,28 @@ router.post('/',upload.fields([
         
         const track=new trackModel({
             name:req.body.name,
-            picture:pictureurl,
-            picturepath:picturefileName,
-            audio:audiourl,
-            audiopath:audiofileName,
+            picture:{
+                url:pictureurl,
+                filepath:picturefileName
+            },
+            audio:{
+              url:audiourl,
+              filepath:audiofileName,
+            },
             duration:req.body.duration,
-            artist:req.body.artist,
-            genre:req.body.genre
+            artist:[
+              "6528df393397afda498007e3"
+            ],
+            genre:[
+              "6528caa27448ac46aaedfbfe"
+            ],
+            album:req.body.album,
+            track_number:req.body.track_number
+            
+            // artist:req.body.artist,
+            // genre:req.body.genre
         })
-        console.log(track)
+        
 
         await track.save()
         res.status(200).json({message:'Track Saved successfully'})
@@ -71,32 +82,36 @@ router.put('/update',upload.fields([
           
           if(!req.file){
             const track=await trackModel.findByIdAndUpdate(req.body.id,req.body,{new:true})
-            console.log(artist)
+            
           }else{
             
             const track=await trackModel.findById(req.body.id)
             if(req.files.picture[0]){
 
-                await bucket.file(track.picturepath).delete()
+                await bucket.file(track.picture.filepath).delete()
             
                 console.log('deleted successfully')
                 const picture=req.files.picture[0]
-                const filename = `aura/track_pic/${Date.now()}_${picture.originalname}`;
+                const filename = `aura/track_img/${Date.now()}_${picture.originalname}`;
                 const uuid=UUID()
                 const fileURL = await uploadFile(picture.buffer,filename,picture.mimetype,uuid);
                 
-                track.picture=fileURL
-                track.picturepath=filename
+                track.picture={
+                  url:fileURL,
+                  filepath:filename
+                }
             }
             if(req.files.audio[0]){
-                await bucket.file(track.audiopath).delete()
+                await bucket.file(track.audio.filepath).delete()
                
                 const audio=req.files.audio[0]
                 const filename = `aura/track_audio/${Date.now()}_${audio.originalname}`;
                 const uuid=UUID()
                 const fileURL = await uploadFile(audio.buffer,filename,audio.mimetype,uuid);
-                track.audio=fileURL
-                track.audiopath=filename
+                track.audio={
+                  url:fileURL,
+                  filepath:filename
+                }
             }
             track.duration=req.body.duration
             track.artist=req.body.artist
@@ -104,7 +119,6 @@ router.put('/update',upload.fields([
             const updatetrack=await trackModel.findByIdAndUpdate(track._id,track,{new:true})
           }
           res.status(200).json({message:'Track Updated Successfully'})
-           
        }catch(err){
         console.log(err)
         res.status(500).send('Internal Server Error')
@@ -167,7 +181,7 @@ router.get('/getqueue/:id',async(req,res)=>{
         },
       },
       { $sample: { size: 10 } },
-    ]);
+    ])
 
     res.status(200).json({ data:similarTracks,message:'success' });
     }catch(err){
@@ -197,5 +211,17 @@ router.get('/genre/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+router.get('/single/:id',async(req,res)=>{
+  try{
+      
+      const track=await trackModel.findById(req.params.id)
+      res.status(200).json({data:track,message:'success'})
+      
+  }catch(err){
+    // console.log(err)
+    res.status(500).json({data:err,message:'Internal Server Error'})
+  }
+})
 
 module.exports=router
