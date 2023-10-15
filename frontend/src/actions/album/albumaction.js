@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+const API_BASE_URL=import.meta.env.VITE_BASE_URL
 
-
-export const fetchAlbums=createAsyncThunk('artist/fetchArtists',async()=>{
+export const fetchAlbums=createAsyncThunk('album/fetchAlbumss',async()=>{
     
     try{
-        const response=await fetch('http://localhost:4000/album',{
+        const response=await fetch(`${API_BASE_URL}/album`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -20,7 +20,7 @@ export const fetchAlbums=createAsyncThunk('artist/fetchArtists',async()=>{
 
 export const fetchSingleAlbum=createAsyncThunk('album/fetchSingleAlbum',async(Id)=>{
     try{
-        const response=await fetch(`http://localhost:4000/album/single/${Id}`,{
+        const response=await fetch(`${API_BASE_URL}/album/single/${Id}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',

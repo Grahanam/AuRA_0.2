@@ -45,8 +45,8 @@ const Musicplayer=()=>{
                             {track.picture?<>
                                 <img src={track.picture?.url} alt="coverimg" className='h-7 md:h-12 lg:h-12 w-auto shadow'/>
                             <div className='m-2 items-start'>
-                                <h1 className='text-m font-semibold text-white tracking-wide'>{track.name}</h1>
-                                <h2 className='text-sm text-lightest tracking-wide pb-0'> 
+                                <h1 className='text-sm md:text-sm lg:text-m font-semibold text-white truncate ellipse tracking-wide'>{track.name}</h1>
+                                <h2 className='text-sm text-lightest tracking-wide truncate pb-0'> 
                                 {track.artist?.map((name,index)=>(
                                         <span key={index}> 
                                             {name.name}

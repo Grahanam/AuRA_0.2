@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+const API_BASE_URL=import.meta.env.VITE_BASE_URL
 
 export const fetchGenres=createAsyncThunk('genre/fetchGenres',async()=>{
     
     try{
-        const response=await fetch('http://localhost:4000/genre',{
+        const response=await fetch(`${API_BASE_URL}/genre`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -22,7 +22,7 @@ export const fetchGenres=createAsyncThunk('genre/fetchGenres',async()=>{
 export const fetchSingleGenre=createAsyncThunk('genre/fetchSingleGenre',async(id)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/genre/single/${id}`,{
+        const response=await fetch(`${API_BASE_URL}/genre/single/${id}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -39,7 +39,7 @@ export const fetchSingleGenre=createAsyncThunk('genre/fetchSingleGenre',async(id
 export const fetchGenreTrack=createAsyncThunk('genre/fetchGenreTrack',async(Id)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/track/genre/${Id}`,{
+        const response=await fetch(`${API_BASE_URL}/track/genre/${Id}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',

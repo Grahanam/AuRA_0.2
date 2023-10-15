@@ -5,8 +5,8 @@ export const albumSlice=createSlice({
     name:'album',
     initialState:{
         albums:[],
-        loading:false,
-        error:null,
+        albumloading:false,
+        albumerror:null,
         album:{},
         singleloading:false,
         singleerror:null
@@ -17,16 +17,16 @@ export const albumSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchAlbums.pending,(state)=>{
-            state.loading=true
-            state.error=null
+            state.albumloading=true
+            state.albumerror=null
         })
         .addCase(fetchAlbums.fulfilled,(state,action)=>{
-            state.loading=false
+            state.albumloading=false
             state.albums=action.payload;
         })
         .addCase(fetchAlbums.rejected,(state,action)=>{
-            state.loading=false
-            state.error=action.error.message;
+            state.albumloading=false
+            state.albumerror=action.error.message;
         })
 
         .addCase(fetchSingleAlbum.pending,(state)=>{

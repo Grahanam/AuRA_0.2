@@ -151,7 +151,7 @@ router.get('/',async(req,res)=>{
         if(req.query.q){
            query={name:{$regex:req.query.q,$options:'i'}}
         }
-        const track=await trackModel.find(query).populate('artist')
+        const track=await trackModel.find(query).populate('artist').limit(4)
         
         res.status(200).json({data:track,message:'success'})
     }catch(err){

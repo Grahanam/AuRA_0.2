@@ -47,7 +47,7 @@ router.get('/',async(req,res)=>{
            query={name:{$regex:req.query.q,$options:'i'}}
           // artist=await artistModel.find(query)
         }
-        const artist=await artistModel.find(query)
+        const artist=await artistModel.find(query).limit(5)
         
         res.status(200).json({data:artist,message:'success'})
     }catch(err){

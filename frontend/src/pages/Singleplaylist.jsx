@@ -5,22 +5,11 @@ import React,{ useEffect, useState } from "react";
 import {getquery} from '../features/Playlist/playlistSlice'
 import { useSelector,useDispatch } from "react-redux";
 import {fetchTrackSearch,fetchSinglePlaylist} from '../actions/playlist/playlistaction'
-
 import Playlistplaybutton from "../components/button/Playlistplaybutton";
-
-
-// import Playbutton from "../components/buttons/playbutton";
-
-// import Playlistsong from "../components/playlistsong/playlistsong";
-
-// import { connect } from "react-redux";
-// import { getlocation } from "../actions/auth";
+const API_BASE_URL=import.meta.env.VITE_BASE_URL
 
 
 const Singleplaylist = ({access,user,getlocation}) => {
-//   getlocation()
-//   const [search, setSearch] = useState("");
-//   let [playlist, setplaylist] = useState([]);
   let [songs, setsong] = useState([]);
   const {token}=useSelector((state)=>state.auth)
   const {search,tracks,playlist}=useSelector((state)=>state.playlist)
@@ -28,45 +17,8 @@ const Singleplaylist = ({access,user,getlocation}) => {
   const dispatch=useDispatch()
   const params = useParams();
   const navigate = useNavigate();
-  
- 
-
-  
-//   let getplaylist=async()=>{
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `JWT ${access}`,
-//             'Accept': 'application/json'
-//         }
-//     };
-//     try {
-//         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/playlist/${params.id}`, config);
-//         setplaylist(res.data);
-//       let data1=res.data
-//       let songs=data1.songs
-//       setplaylistsong(songs)
-//     } catch (err) {
-//         console.log('something went wrong')
-//     }   
-// }
 
 
-// let getsongs=async()=>{
-//   const config = {
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `JWT ${access}`,
-//           'Accept': 'application/json'
-//       }
-//   };
-//   try {
-//       const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/song/?q=${search}`, config);
-//       setsong(res.data);
-//   } catch (err) {
-//       console.log('something went wrong')
-//   }   
-// }
   const inputEvent = (e) => {
     const data = e.target.value;
     dispatch(getquery(data))
@@ -76,7 +28,7 @@ const Singleplaylist = ({access,user,getlocation}) => {
   }
 
   let updateplaylist=(id)=>{
-    fetch(`http://localhost:4000/playlist/add/${params.id}`,{
+    fetch(`${API_BASE_URL}/playlist/add/${params.id}`,{
     method:"PUT",    
     headers:{
             'Content-Type':'application/json',
@@ -87,30 +39,12 @@ const Singleplaylist = ({access,user,getlocation}) => {
     .then(response=>{
         dispatch(fetchSinglePlaylist(params.id))
         alert(response.message)
-    })
-
-    // e.preventDefault()
-    // const config = { 
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `JWT ${access}`,
-    //         'Accept': 'application/json'
-    //     },
-    // };
-    // const body =JSON.stringify({'songid':e.target.songid.value,});
-    // try {
-    //     const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/playlistupdate/${params.id}`,body, config);
-        
-    //     getplaylist()
-    // } catch (err) {
-    //     console.log('something went wrong')
-    //     alert("unsuccessfull")
-    // }   
+    }) 
   }
 
   const removetrack=()=>{
 
-    fetch(`http://localhost:4000/playlist/remove/${params.id}`,{
+    fetch(`${API_BASE_URL}/playlist/remove/${params.id}`,{
     method:"PUT",    
     headers:{
             'Content-Type':'application/json',
@@ -124,29 +58,10 @@ const Singleplaylist = ({access,user,getlocation}) => {
     })
   }
 
-//   const playlistdelete=async()=>{
-//     const config = {
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `JWT ${access}`,
-//           'Accept': 'application/json'
-//       },
-//   };
-  
-//   try {
-//       const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/playlist/delete/${playlist.id}`, config);
-//       console.log(res.data)
-//       navigate(`/playlist`)
-//   } catch (err) {
-//       console.log('something went wrong')
-//   }  
-  
-//   }
 
   useEffect(() => {
     dispatch(fetchSinglePlaylist(params.id))
-    // getplaylist();
-    // getsongs();
+
   }, [search,token]); 
   return (
     <>
@@ -224,9 +139,6 @@ const Singleplaylist = ({access,user,getlocation}) => {
             </div>
             <div className="flex p-2 md:p-4 lg:p-4 items-start justify-self-end "><i onClick={()=>removetrack(song._id)}><FontAwesomeIcon icon={faX} className="text-white text-m  "/></i></div>
             </div>
-          {/* <Playlistsong playlistid={params.id} songid={item} songcall={getplaylist}/> */}
-          {/* <Navigator id={item}></Navigator> */}
-          {/* <Playlistsongclass  songid={item}/> */}
           </li>
         ))}
       </ul>
@@ -279,11 +191,5 @@ const Singleplaylist = ({access,user,getlocation}) => {
     </>
   );
 };
-
-// const mapStateToProps = state=>({
-//   user:state.auth.user,
-//   access:state.auth.access
-// })
-// export default connect(mapStateToProps,{getlocation})(Singleplaylist)
 
 export default Singleplaylist

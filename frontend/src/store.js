@@ -9,6 +9,7 @@ import locationreducer from './features/Location/locationslice'
 import playerreducer from './features/player/playerSlice'
 import playlistreducer from './features/Playlist/playlistSlice'
 import albumreducer from './features/Album/albumSlice'
+import trackreducer from './features/Track/trackSlice'
 
 const store = configureStore({
     reducer:{
@@ -19,7 +20,8 @@ const store = configureStore({
         location:locationreducer,
         player:playerreducer,
         playlist:playlistreducer,
-        album:albumreducer
+        album:albumreducer,
+        track:trackreducer
     },
 })
 

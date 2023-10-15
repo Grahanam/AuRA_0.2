@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+const API_BASE_URL=import.meta.env.VITE_BASE_URL
 
 export const fetchPlaylist=createAsyncThunk('playlist/fetchPlaylist',async(userId)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/playlist/${userId}`,{
+        const response=await fetch(`${API_BASE_URL}/playlist/${userId}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -22,7 +22,7 @@ export const fetchPlaylist=createAsyncThunk('playlist/fetchPlaylist',async(userI
 export const fetchSinglePlaylist=createAsyncThunk('playlist/fetchSinglePlaylist',async(Id)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/playlist/single/${Id}`,{
+        const response=await fetch(`${API_BASE_URL}/playlist/single/${Id}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -39,7 +39,7 @@ export const fetchSinglePlaylist=createAsyncThunk('playlist/fetchSinglePlaylist'
 
 export const savePlaylist=createAsyncThunk('playlist/savePlaylist',async(data)=>{
     try{
-        const response=await fetch(`http://localhost:4000/playlist`,{
+        const response=await fetch(`${API_BASE_URL}/playlist`,{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -57,7 +57,7 @@ export const savePlaylist=createAsyncThunk('playlist/savePlaylist',async(data)=>
 export const fetchTrackSearch=createAsyncThunk('search/fetchtracks',async(searchquery)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/track/?q=${searchquery}`,{
+        const response=await fetch(`${API_BASE_URL}/track/?q=${searchquery}`,{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -74,7 +74,7 @@ export const fetchTrackSearch=createAsyncThunk('search/fetchtracks',async(search
 export const trackadd=createAsyncThunk('playlist/trackadd',async(data)=>{
     
     try{
-        const response=await fetch(`http://localhost:4000/playlist/add/${data.id}`,{
+        const response=await fetch(`${API_BASE_URL}/playlist/add/${data.id}`,{
             method:'PUT',
             headers:{
                 'Accept':'application/json',
@@ -91,7 +91,7 @@ export const trackadd=createAsyncThunk('playlist/trackadd',async(data)=>{
 
 export const trackremove=createAsyncThunk('playlist/trackremove',async(data)=>{
     try{
-        const response=await fetch(`http://localhost:4000/playlist/remove/${data.id}`,{
+        const response=await fetch(`${API_BASE_URL}/playlist/remove/${data.id}`,{
             method:'PUT',
             headers:{
                 'Accept':'application/json',

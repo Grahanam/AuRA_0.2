@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookie from 'universal-cookie'
-
+const API_BASE_URL=import.meta.env.VITE_BASE_URL
 
 
 
 export const googleAuth=createAsyncThunk('auth/googleAuth',async(token)=>{
     const cookie=new Cookie
     try{
-        const response=await fetch('http://localhost:4000/googletoken',{
+        const response=await fetch(`${API_BASE_URL}/googletoken`,{
             method:'POST',
             headers:{
                "Accept":"application/json",

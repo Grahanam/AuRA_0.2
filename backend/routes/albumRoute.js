@@ -110,7 +110,7 @@ router.delete('/delete/:id',async(req,res)=>{
         if(req.query.q){
            query={name:{$regex:req.query.q,$options:'i'}}
         }
-        const album=await albumModel.find(query)
+        const album=await albumModel.find(query).limit(5)
         res.status(200).json({data:album,message:'success'})
     }catch(err){
         console.log(err)

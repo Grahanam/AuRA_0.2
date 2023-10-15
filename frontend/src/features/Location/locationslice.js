@@ -8,9 +8,8 @@ export const locationSlice=createSlice({
         location:[]
     },
     reducers:{
-        getlocation:(state,action)=>{
-               
-               state.location=action.payload
+        getlocation:(state,action)=>{   
+            state.location=action.payload
         }
     }
 })
