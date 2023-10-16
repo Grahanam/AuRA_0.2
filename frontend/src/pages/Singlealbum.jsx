@@ -91,7 +91,11 @@ const Singlealbum = ({access,user,getlocation}) => {
             <div className={`flex flex-row items-center align-center ${track._id==song._id?'text-green-500':'text-white'} justify-center py-2 p-6`}>
             <div className={`w-2/12 text-xl font-medium  `}>
                 {/* <i><FontAwesomeIcon icon={faMusic} className="mt-2 text-white text-l"/></i> */}
-                {index+1}.
+                {/* {index+1}. */}
+                {track._id==song._id?<i><FontAwesomeIcon icon={faMusic} className="mt-2 text-l"/></i>
+                :<>
+                    {index+1}.
+                </>}
             </div> 
             <div className="w-8/12">
                 <h1 className="text-xl font-medium tracking-wide">{song.name}</h1>
@@ -110,12 +114,7 @@ const Singlealbum = ({access,user,getlocation}) => {
           
         </div>
       </div>
-
-      <div className="mx-4 mt-10">
-          <h1 className="pl-2 text-2xl font-semibold text-white tracking-wider hover:underline ">Let's find something for your playlist</h1>
-      </div>
      
-
       
     </>
   );
