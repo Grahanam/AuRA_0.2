@@ -69,15 +69,15 @@ const google = () => {
     }
     return (
         <>
-        <div className=" h-full flex items-center ">
+        <div className=" h-full relative flex items-center ">
             {token?(
-                    <>
+                    <div className='pr-4'>
                         <div  onClick={()=>{setOpen(!open)}} className='h-10 w-10 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-blue-500 p-1'>
                             <img className='rounded-full w-full h-full' src={token.picture} alt='profile img'/>
                         </div>
                         {/* <div>{token.fullname}</div> */}
                         {/* <button onClick={Logout}>Logout </button> */}
-                    </> 
+                    </div> 
                 ):(
                     <>
                     <div className='px-8 bg-white h-full flex items-center'>
@@ -95,10 +95,10 @@ const google = () => {
 
                     </>
                 )}
-                {token?(<div className={`drop-down absolute bg-black bg-light rounded mt-1 ${open?'':'hidden'} `} >
+                {token?(<div className={`drop-down absolute -bottom-20 -left-10 bg-black bg-light rounded mt-1 ${open?'':'hidden'} `} >
                 <ul className=''> 
-                   <li><Link to={`/profile`}><button className='w-full text-sm py-2 text-lightest hover:text-white border-b border-white opacity-75 hover:opacity-100' onClick={()=>{setOpen(!open)}}>Account</button></Link></li>
-                   <li><button onClick={Logout} className='w-full text-sm py-2 text-lightest hover:text-white border-b border-white opacity-75 hover:opacity-100' >Log Out</button></li>              
+                   <li><Link to={`/profile`}><button className='w-full text-sm p-2 text-white hover:text-white border-b border-white opacity-75 hover:opacity-100' onClick={()=>{setOpen(!open)}}>Account</button></Link></li>
+                   <li><button onClick={Logout} className='w-full text-sm p-2 text-lightest hover:text-white border-b border-white opacity-75 hover:opacity-100' >Log Out</button></li>              
                 </ul>
                 </div>):(null)}
             </div>
