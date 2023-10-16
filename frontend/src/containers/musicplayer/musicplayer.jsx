@@ -20,7 +20,7 @@ const Musicplayer=()=>{
 
     return(
         <>
-        <div className="w-full sticky h-[16vh] md:h-[12vh] lg:h-[12vh] bg-black mb-10 md:mb-0">
+        <div className="w-full h-[16vh] md:h-[12vh] lg:h-[12vh] bg-black mb-10 md:mb-0">
         <div className="w-full h-full">
     
                 <div  className='p-0 md:p-1 lg:p-1 w-full '>
