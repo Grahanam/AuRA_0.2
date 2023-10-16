@@ -86,7 +86,7 @@ const Home=({getlocation,access})=>{
         <div className="px-2 py-2 md:px-6 lg:px-6  md:py-3 lg:py-3 ">
             <div className='text-2xl md:text-4xl lg:text-4xl text-semibold text-white'>{greeting}</div>
         <br/>
-        <div className='columns-1 md:columns-2 lg:columns-2'>
+        <div className='columns-1 md:columns-2 lg:columns-2 pb-6'>
             {tracks.map((track,index)=>(
                 <div key={index} className="w-full mb-2">
                 <div onClick={()=>loadtrackandqueue(track)} className=' w-full hover:cursor-pointer '>
@@ -121,7 +121,7 @@ const Home=({getlocation,access})=>{
             <div className=" flex items-center justify-between">
                 <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Artist you may like</h1>
             </div>
-            <div className="w-full flex flex-row overflow-x-auto">
+            <div className="w-full flex flex-row overflow-x-auto pb-6">
                     {artists.map((artist,index)=>(
                         <Link key={index} to={`/artist/${artist._id}`} >
                           <div className='p-2 w-48'>
@@ -144,7 +144,7 @@ const Home=({getlocation,access})=>{
             <div className=" flex items-center justify-between">
                 <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Album you may like</h1>
             </div>
-            <div className="w-full flex flex-row overflow-x-auto">
+            <div className="w-full flex flex-row overflow-x-auto pb-6">
                     {albums.map((album,index)=>(
                         <Link key={index} to={`/album/${album._id}`} >
                           <div className='p-2 w-48'>

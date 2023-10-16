@@ -69,7 +69,7 @@ const google = () => {
     }
     return (
         <>
-        <div className="  ">
+        <div className=" h-full flex items-center ">
             {token?(
                     <>
                         <div  onClick={()=>{setOpen(!open)}} className='h-10 w-10 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-blue-500 p-1'>
@@ -80,7 +80,7 @@ const google = () => {
                     </> 
                 ):(
                     <>
-                    <div className='mx-8'>
+                    <div className='px-8 bg-white h-full flex items-center'>
                     <GoogleLogin
                     className='p-4'
                         onSuccess={credentialResponse => {
@@ -93,7 +93,6 @@ const google = () => {
                     />
                     </div>
 
-                    {/* <button onClick={googlelogin}><i><FontAwesomeIcon icon={faGoogle}></FontAwesomeIcon></i> Auth</button> */}
                     </>
                 )}
                 {token?(<div className={`drop-down absolute bg-black bg-light rounded mt-1 ${open?'':'hidden'} `} >
@@ -103,27 +102,6 @@ const google = () => {
                 </ul>
                 </div>):(null)}
             </div>
-        {/* {token?<>
-
-                <div  onClick={()=>{setOpen(!open)}} className='rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-blue-500 p-1'>
-                    <img className='rounded-full' src={token.picture} alt='profile img'/>
-                </div>
-            <div>{token.fullname}</div>
-            <button onClick={Logout}>Logout </button>
-            </>:<>
-            <GoogleLogin
-            onSuccess={credentialResponse => {
-              console.log(credentialResponse);
-              dispatch(googleAuth(credentialResponse))
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-        />
-        </>} */}
-        
-
-
         
         </>
     )
