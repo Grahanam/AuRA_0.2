@@ -7,30 +7,13 @@ import { fetchPlaylist,savePlaylist } from '../actions/playlist/playlistaction'
 import { useEffect,useContext,useState } from 'react'
 
 
-const Playlist=({getlocation,user,access})=>{
+const Playlist=()=>{
 //   getlocation()
   let [playlistinput,setplaylistinput]=useState('')
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const {playlists,loading,error}=useSelector((state)=>state.playlist)
   const {token}=useSelector((state)=>state.auth)
-//   let getplaylist=async()=>{
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `JWT ${access}`,
-//             'Accept': 'application/json'
-//         }
-//     };
-//     try {
-//         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/getplaylist/${user.id}`, config);
-//         // const art=  await axios.get(`${process.env.REACT_APP_API_URL}/api/song/?q=${data}`, config);
-//         console.log(res.data)
-//         setplaylist(res.data)
-//     } catch (err) {
-//         console.log('something went wrong')
-//     }   
-// }
 
 let createplaylist=()=>{
   const userid=token.userid
@@ -43,24 +26,6 @@ let createplaylist=()=>{
   
   dispatch(fetchPlaylist(token?.userid))
 }
-// let createplaylist=async(e)=>{
-//   e.preventDefault()
-//   const config = {
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `JWT ${access}`,
-//           'Accept': 'application/json'
-//       },
-//   };
-//   const body =JSON.stringify({'title':e.target.title.value,'username':e.target.username.value});
-//   try {
-//       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/playlist/`,body, config);
-//       const playlistdata=res.data
-//       navigate(`/playlist/${playlistdata.id}`)
-//   } catch (err) {
-//       console.log('something went wrong')
-//   }   
-// }
 
   useEffect(()=>{
     if(token?.userid){
@@ -70,6 +35,7 @@ let createplaylist=()=>{
   },[token])
     return(
         <>
+        {token?<>
           <div className="px-1 py-1 md:px-3 md:py-2 lg:px-6 lg:py-3 bg-gradient-to-b from-purple-700 box-content h-auto">
             <div className="w-full ">
                         <div className='p-3 md:p-4 lg:p-5 w-[100%]'>
@@ -111,6 +77,18 @@ let createplaylist=()=>{
             </>}
             
         </div>
+        </>:<>
+        <div className="flex flex-col items-center py-2">
+                  <i ><FontAwesomeIcon icon={faMusic} className="mt-10 text-white text-md md:text-xl lg:text-xl"/></i>
+                  <h1 className='text-2xl md:text-3xl lg:text-3xl my-4 font-semibold text-white tracking-wide'>Sign-in to create your playlist</h1>
+                  <h1 className='text-md text-center md:text-xl lg:text-xl font-medium text-white tracking-wide pb-5'>TuneYourAura.</h1>
+                  {/* <Link to="/search" className="" activeClassName="active" >
+                  <button className='text-m font-semibold tracking-wide text-black py-3 px-6 bg-white rounded-full '>Find artists</button>
+                  </Link> */}
+                </div>
+        </>}
+          
+
       </>)}
 
 export default Playlist
