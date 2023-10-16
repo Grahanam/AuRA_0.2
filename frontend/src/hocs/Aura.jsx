@@ -9,13 +9,14 @@ import Singleplaylist from '../pages/Singleplaylist'
 import SingleArtist from '../pages/Singleartist'
 import SingleGenre from '../pages/Singlegenre'
 import SingleAlbum from '../pages/Singlealbum'
+import Mobilebar from '../containers/mobilebar/mobilebar'
 
 const  Aura=()=>{
     return(
         <>
         <div className="bg-dark h-screen">
         
-        <div className="flex h-[84vh] md:h-[88vh] lg:h-[88vh]">
+        <div className="flex h-[80vh] md:h-[88vh] lg:h-[88vh]">
          <Sidebar/>
          <div className='w-full h-full overflow-y-scroll'>
            <Topbar/>
@@ -48,7 +49,7 @@ const  Aura=()=>{
          {/* music player */}
          <Musicplayer/>
         {/* <div className="w-full h-[12vh] bg-light"></div> */}
-         {/* <Mobilebar/> */}
+         <Mobilebar/>
       
       </div>
         </>

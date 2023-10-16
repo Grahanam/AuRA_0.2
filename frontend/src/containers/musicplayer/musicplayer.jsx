@@ -20,9 +20,8 @@ const Musicplayer=()=>{
 
     return(
         <>
-        <div className="w-full h-[16vh] md:h-[12vh] lg:h-[12vh] bg-black mb-10 md:mb-0">
+        <div className="w-full h-[20vh] md:h-[12vh] lg:h-[12vh] bg-black mb-10 md:mb-0">
         <div className="w-full h-full">
-    
                 <div  className='p-0 md:p-1 lg:p-1 w-full '>
                     <div className=' rounded-lg shadow-md hover:bg-light flex md:flex-row'>
                         <div className='hidden md:flex md:w-3/12 lg:flex flex flex-row items-center '>
