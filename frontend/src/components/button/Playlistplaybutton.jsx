@@ -12,7 +12,7 @@ const Playlistplaybutton=({playlist})=>{
     const dispatch=useDispatch()
     return(
         <>
-           <FontAwesomeIcon className="icon-controller " icon={faPlay} onClick={()=>dispatch(loadplaylist(playlist))} />
+           <FontAwesomeIcon className="icon-controller  hover:cursor-pointer" icon={faPlay} onClick={()=>dispatch(loadplaylist(playlist))} />
         </>
     )
 }
