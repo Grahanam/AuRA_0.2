@@ -22,18 +22,18 @@ const Musicplayer=()=>{
     return(
         <>
         <div className="w-full h-[0vh] md:h-[12vh] lg:h-[12vh] bg-transparent md:bg-black lg:bg-black mb-10 md:mb-0">
-        <div className={`w-full ${!open?'absolute':'hidden'} h-full top-0 z-10 bg-black md:z-0 lg:z-0 fixed md:static lg:static`}>
+        <div className={`w-full ${!open?'fixed':'invisible'} h-full top-0 z-10 bg-black md:z-0 lg:z-0 md:visible lg:visible  md:static lg:static`}>
                 <div  className='p-0 md:p-1 lg:p-1 w-full h-full'>
                     <div className=' rounded-lg shadow-md h-full flex flex-col md:flex-row lg:flex-row'>
                         <div className='md:hidden lg:hidden flex items-center p-2 h-[10%]'>
                             <i onClick={()=>setopen(!open)} className='p-1'><FontAwesomeIcon icon={faChevronDown}></FontAwesomeIcon></i>
                         </div>
-                        <div className='h-[75%] md:flex md:w-3/12 lg:flex flex flex-col md:flex-row lg:flex-row items-center '>
+                        <div className='h-[75%] md:flex md:w-3/12 lg:flex flex flex-col md:flex-row lg:flex-row items-center truncate ellipse'>
                             {track.picture?<>
                                 <img src={track.picture?.url} alt="coverimg" className='h-auto w-[80%] md:h-12 lg:h-12 md:w-auto lg:w-auto shadow'/>
-                            <div className='m-2 items-start text-center'>
+                            <div className='m-2 items-start text-center md:text-left lg:text-left'>
                                 <h1 className='text-sm md:text-sm lg:text-m font-semibold text-white truncate ellipse tracking-wide'>{track.name}</h1>
-                                <h2 className='text-sm text-lightest tracking-wide truncate pb-0'> 
+                                <h2 className='text-sm  tracking-wide truncate pb-0'> 
                                 {track.artist?.map((name,index)=>(
                                         <span key={index}> 
                                             {name.name}
@@ -84,8 +84,6 @@ const Musicplayer=()=>{
                             </>}
                             
                         </div> 
-        {/* <Audioplayer className=' ' src={track.audio?.url} showSkipControls onClickNext={()=> dispatch(handlenext())} onClickPrevious={()=>dispatch(handleprevious)} onEnded={()=>dispatch(handleEnd)} />  
-                          */}
         </div>
         </>:<>
         
