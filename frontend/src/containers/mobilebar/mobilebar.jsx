@@ -32,13 +32,7 @@ const Mobilebar = ()=>{
               </Link> 
           </div>
       </div>
-      
-        </>
+      </>
     )
 }
-// const mapStateToProps = state=>({
-//   location:state.auth.location,
-//   access:state.auth.access
-// })
-// export default connect(mapStateToProps,{})(Mobilebar)
 export default Mobilebar

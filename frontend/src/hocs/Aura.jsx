@@ -14,9 +14,9 @@ import Mobilebar from '../containers/mobilebar/mobilebar'
 const  Aura=()=>{
     return(
         <>
-        <div className="bg-dark h-screen">
+        <div className="bg-dark h-screen relative">
         
-        <div className="flex h-[80vh] md:h-[88vh] lg:h-[88vh]">
+        <div className="flex h-[100vh] md:h-[88vh] lg:h-[88vh]">
          <Sidebar/>
          <div className='w-full h-full overflow-y-scroll'>
            <Topbar/>
