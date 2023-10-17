@@ -2,8 +2,7 @@ import {Outlet,Link} from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome,faSearch,faBarChart ,faAdd,faHeart} from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from "react-redux"
-// import { connect } from "react-redux"
-
+import auralogo from '../../assets/auralogo.png'
 
 
 const Sidebar = ()=>{
@@ -13,8 +12,9 @@ const Sidebar = ()=>{
         <>
         <div className="md:w-48 lg:w-64 h-full flex-none bg-black hidden md:block lg:block">
             <div className="h-10 p-5 pb-10 mb-5 text-center">
-            <Link to="/" className=""  >
-                <span className="md:text-3xl lg:text-4xl font-extrabold text-white">AURA.</span>
+            <Link to="/" className="flex flex-row items-center "  >
+                <i className="p-1 rounded bg-white"><img className="h-5 w-5" src={auralogo} alt="logo"/></i>
+                <span className="md:text-3xl lg:text-4xl font-extrabold text-white">URA.</span>
             </Link>
             </div>
             <div className="mx-2 mt-2 mb-2 rounded bg-neutral-900">

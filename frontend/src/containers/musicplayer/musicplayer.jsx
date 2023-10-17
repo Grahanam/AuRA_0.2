@@ -13,7 +13,7 @@ import {handleEnd,handlenext,handleprevious} from "../../features/player/playerS
 const Musicplayer=()=>{
     const {track,playlist,currenttrack}=useSelector((state)=>state.player)
     const dispatch=useDispatch()
-    const [open,setopen]=useState(false)
+    const [open,setopen]=useState(true)
  
     useEffect(()=>{
          
@@ -21,7 +21,7 @@ const Musicplayer=()=>{
 
     return(
         <>
-        <div className="w-full h-[0vh] md:h-[12vh] lg:h-[12vh] bg-transparent md:bg-black lg:bg-black mb-10 md:mb-0">
+        <div className="w-full h-0 md:h-[12vh] lg:h-[12vh] bg-transparent md:bg-black lg:bg-black mb-10">
         <div className={`w-full ${!open?'fixed':'invisible'} h-full top-0 z-10 bg-black md:z-0 lg:z-0 md:visible lg:visible  md:static lg:static`}>
                 <div  className='p-0 md:p-1 lg:p-1 w-full h-full'>
                     <div className=' rounded-lg shadow-md h-full flex flex-col md:flex-row lg:flex-row'>

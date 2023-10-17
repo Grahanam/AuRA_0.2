@@ -10,11 +10,12 @@ import SingleArtist from '../pages/Singleartist'
 import SingleGenre from '../pages/Singlegenre'
 import SingleAlbum from '../pages/Singlealbum'
 import Mobilebar from '../containers/mobilebar/mobilebar'
+import Footer from '../components/footer/Footer'
 
 const  Aura=()=>{
     return(
         <>
-        <div className="bg-dark h-screen relative">
+        <div className="bg-dark h-screen">
         
         <div className="flex h-[100vh] md:h-[88vh] lg:h-[88vh]">
          <Sidebar/>
@@ -43,7 +44,7 @@ const  Aura=()=>{
               
               
             </Routes>
-            
+            <Footer/>
          </div>
         </div> 
          {/* music player */}
