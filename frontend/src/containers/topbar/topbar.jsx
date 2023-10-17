@@ -1,5 +1,5 @@
 import React,{useState,useContext,Fragment} from 'react';
-import {useLocation} from 'react-router-dom'
+import {useLocation,useNavigate} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown,faChevronRight,faChevronLeft,faUser} from '@fortawesome/free-solid-svg-icons'
@@ -17,6 +17,15 @@ const Topbar=({logout})=>{
     const [open,setOpen]=useState(false);
     const [profile,setprofile]=useState([])
     const locate=useLocation()
+
+    const history=useNavigate()
+    const goBack = () => {
+        history(-1); // This is equivalent to clicking the browser's back button
+      };
+    
+      const goForward = () => {
+        history(1); // This is equivalent to clicking the browser's forward button
+      };
 
     const {location}=useSelector((state)=>state.location)
     
@@ -55,10 +64,10 @@ const Topbar=({logout})=>{
         <div className="bg-neutral-900 z-10 w-full sticky top-0 pl-2 h-14 flex items-center md:justify-between lg:justify-between justify-end">
             <div className="flex items-center hidden md:flex lg:flex">
                <button className="rounded-full bg-black w-8 h-8 text-white mr-3">
-                <i><FontAwesomeIcon icon={faChevronLeft} className=" "/></i>
+                <i onClick={goBack}><FontAwesomeIcon icon={faChevronLeft} className=" "/></i>
                </button>
                <button className="rounded-full bg-black w-8 h-8 text-white">
-                <i><FontAwesomeIcon icon={faChevronRight} className=""/></i>
+                <i onClick={goForward}><FontAwesomeIcon icon={faChevronRight} className=""/></i>
                </button>
             </div>
             {/* <Search/> */}
