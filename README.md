@@ -28,6 +28,7 @@ In Google Developer Console go to -> Apis and Services ->credentials
 
 ![auraclient2](https://github.com/Grahanam/PaLM/assets/68738881/27aa6a01-8c90-41b2-9d71-81eac5b4d9e7)
 
+Change urls when running in production
 ![auraclientid3](https://github.com/Grahanam/PaLM/assets/68738881/b6aed0f8-278d-44c0-b434-bad1c82c43a9)
 
 
