@@ -70,7 +70,7 @@ const SingleGenre=({user,access,getlocation})=>{
                         // <Link to={`/song/${songs.id}`} >
                           <div className='p-2 w-36 md:w-48 lg:w-48'>
                               <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={song.picture} className='h-auto w-full shadow mb-2'/>
+                                <img src={song.picture.url} className='h-auto w-full shadow mb-2'/>
                                 <h1 className='text-white text-sm md:text-md lg:text-md tracking-wide font-semibold'>{song.name}</h1>
                                 <h2 className='text-xs text-lightest tracking-wide lg:pb-1'>Song</h2>   
                               </div>

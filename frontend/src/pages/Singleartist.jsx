@@ -6,7 +6,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { fetchArtistTrack, fetchSingleArtist } from '../actions/artist/artistaction'
 
 
-const SingleArtist=({access,getlocation})=>{
+const SingleArtist=()=>{
     const [song,setsong]=useState([])
     // const [artist,setArtist]=useState([])
     const params=useParams()
@@ -54,8 +54,8 @@ const SingleArtist=({access,getlocation})=>{
     },[])
     return(
         <>
-        <div className='h-52 md:h-96 lg:h-96 bg-fixed bg-no-repeat bg-contain bg-black bg-opacity-25 bg-center' style={{backgroundImage:`url(${artist.picture?.url})`}}>
-            <div className='mt-2 ml-4 flex flex-col justify-end bg-black bg-opacity-25 h-full items-start p-9'>
+        <div className='h-52 md:h-96 lg:h-96 bg-fixed bg-no-repeat bg-cover md:bg-contain lg:bg-contain bg-black bg-opacity-25 bg-center' style={{backgroundImage:`url(${artist.picture?.url})`}}>
+            <div className=' flex flex-col justify-end bg-black bg-opacity-25 h-full items-start p-9'>
                 <h1 className='text-md font-semibold text-white tracking-wide'>Artist</h1>
                 <h1 className='text-4xl md:text-6xl lg:text-8xl font-extrabold text-white tracking-wide pb-5'>{artist.name}</h1>
                 <h2 className='text-sm text-lightest tracking-wide'></h2>
@@ -72,22 +72,22 @@ const SingleArtist=({access,getlocation})=>{
                         // <Link to={`/song/${song._id}`} >
                           <div key={index} className='p-2 w-48'>
                               <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={song.picture} alt='cover' className='h-auto w-full shadow mb-2'/>
-                                <h1 className='text-white text-md tracking-wide font-semibold'>{song.name}</h1>
+                                <img src={song.picture.url} alt='cover' className='h-auto w-full shadow mb-2'/>
+                                <h1 className='text-white text-sm tracking-wide font-semibold truncate'>{song.name}</h1>
                                 <h2 className='text-xs text-lightest tracking-wide pb-1'>Song</h2>   
                               </div>
                           </div>
                         // </Link>
                     ))}</>):(<></>)}
             </div>
-            <div className=" flex items-center justify-between">
+            {/* <div className=" flex items-center justify-between">
                <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">About</h1>
                
             </div>
             <div className='h-96  bg-no-repeat bg-cover bg-top p-5 md:p-7 lg:p-10 bg-light' style={{backgroundImage:`url($)`}}>
                 <p className='text-white font-semibold tracking-wider'>{artist.description}</p>
             </div>
-          
+           */}
         </div>
          
 

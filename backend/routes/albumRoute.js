@@ -29,10 +29,12 @@ router.post('/',upload.single('file'),async(req,res)=>{
         album_type:req.body.album_type,
         total_tracks:req.body.total_tracks,
         genres:req.body.genres,
+        artists:req.body.artists,
         picture:{
                url:fileURL,
                filepath:filename
         }
+
         })
         await album.save()
         res.status(200).json({message:`${album.name} Album Saved successfully`})

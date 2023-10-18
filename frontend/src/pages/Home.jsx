@@ -154,7 +154,7 @@ const Home=({getlocation,access})=>{
                                     <i className='group-hover:visible invisible  transition delay-150 absolute bottom-3 right-1 bg-green-400 flex items-center justify-center h-9 w-9 rounded-full text-black'><FontAwesomeIcon icon={faPlay}/></i>
                                 </div>
                                 <h1 className='text-white text-md tracking-wide font-semibold truncate'>{album.name}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide pb-1'>Album</h2>   
+                                <h2 className='text-xs text-lightest tracking-wide pb-1'>{album.album_type}</h2>   
                                 
                               </div>
                           </div>

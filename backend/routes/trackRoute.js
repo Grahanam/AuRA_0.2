@@ -51,10 +51,10 @@ router.post('/',upload.fields([
             },
             duration:req.body.duration,
             artist:[
-              "6528df393397afda498007e3"
+              "652f82943b199a3d5cbfbacd"
             ],
             genre:[
-              "6528caa27448ac46aaedfbfe"
+              "6528c9937448ac46aaedfbf4","6528caa27448ac46aaedfbfe"
             ],
             album:req.body.album,
             track_number:req.body.track_number

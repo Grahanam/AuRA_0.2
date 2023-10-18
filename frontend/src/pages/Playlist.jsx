@@ -78,7 +78,7 @@ let createplaylist=()=>{
             
         </div>
         </>:<>
-        <div className="flex flex-col items-center py-2">
+        <div className="flex flex-col items-center h-full py-2">
                   <i ><FontAwesomeIcon icon={faMusic} className="mt-10 text-white text-md md:text-xl lg:text-xl"/></i>
                   <h1 className='text-2xl md:text-3xl lg:text-3xl my-4 font-semibold text-white tracking-wide'>Sign-in to create your playlist</h1>
                   <h1 className='text-md text-center md:text-xl lg:text-xl font-medium text-white tracking-wide pb-5'>TuneYourAura.</h1>

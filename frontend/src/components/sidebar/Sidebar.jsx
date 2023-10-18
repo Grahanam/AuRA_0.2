@@ -13,7 +13,7 @@ const Sidebar = ()=>{
         <div className="md:w-48 lg:w-64 h-full flex-none bg-black hidden md:block lg:block">
             <div className="h-10 p-5 pb-10 mb-5 text-center">
             <Link to="/" className="flex flex-row items-center "  >
-                <i className="p-1 rounded bg-white"><img className="h-5 w-5" src={auralogo} alt="logo"/></i>
+                <i className="p-1 rounded bg-white"><img className="md:h-5 lg:w-5 md:h-6 lg:w-6" src={auralogo} alt="logo"/></i>
                 <span className="md:text-3xl lg:text-4xl font-extrabold text-white">URA.</span>
             </Link>
             </div>
