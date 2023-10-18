@@ -4,48 +4,12 @@ import {Link, useParams} from 'react-router-dom'
 import { useState,useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchArtistTrack, fetchSingleArtist } from '../actions/artist/artistaction'
-
+import Tracksquare from '../components/track/tracksquare'
 
 const SingleArtist=()=>{
-    const [song,setsong]=useState([])
-    // const [artist,setArtist]=useState([])
     const params=useParams()
     const dispatch=useDispatch()
-
     const {artist,tracks}=useSelector((state)=>state.artist)
-    
-
-    // getlocation()
-    // let getartist=async()=>{
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `JWT ${access}`,
-    //             'Accept': 'application/json'
-    //         }
-    //     };
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/artist/${params.id}/`, config);
-    //         setArtist(res.data)
-    //     } catch (err) {
-    //         console.log('something went wrong')
-    //     }   
-    // }
-    // let getsong=async()=>{
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `JWT ${access}`,
-    //             'Accept': 'application/json'
-    //         }
-    //     };
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/getartistsong/${params.id}/`, config);
-    //         setsong(res.data)
-    //     } catch (err) {
-    //         console.log('something went wrong')
-    //     }   
-    // }
     useEffect(()=>{
         // getartist()
         // getsong()
@@ -69,25 +33,11 @@ const SingleArtist=()=>{
             <br/>
             <div className="w-full flex flex-row overflow-x-auto">
                 {tracks?(<>{tracks.map((song,index)=>(
-                        // <Link to={`/song/${song._id}`} >
-                          <div key={index} className='p-2 w-48'>
-                              <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={song.picture.url} alt='cover' className='h-auto w-full shadow mb-2'/>
-                                <h1 className='text-white text-sm tracking-wide font-semibold truncate'>{song.name}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide pb-1'>Song</h2>   
-                              </div>
-                          </div>
-                        // </Link>
+                       <div key={index}>
+                       <Tracksquare song={song} index={index}/>
+                   </div>
                     ))}</>):(<></>)}
             </div>
-            {/* <div className=" flex items-center justify-between">
-               <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">About</h1>
-               
-            </div>
-            <div className='h-96  bg-no-repeat bg-cover bg-top p-5 md:p-7 lg:p-10 bg-light' style={{backgroundImage:`url($)`}}>
-                <p className='text-white font-semibold tracking-wider'>{artist.description}</p>
-            </div>
-           */}
         </div>
          
 
@@ -95,10 +45,5 @@ const SingleArtist=()=>{
         </>
     )
 }
-// const mapStateToProps = state=>({
-//     user:state.auth.user,
-//     access:state.auth.access
-//   })
-// export default connect(mapStateToProps,{getlocation})(SingleArtist) 
 
 export default SingleArtist

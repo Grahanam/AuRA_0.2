@@ -1,57 +1,17 @@
 import {Link, useParams} from 'react-router-dom'
 import { useState,useEffect } from 'react'
-// import axios from 'axios'
-
-// import CardSong from '../../components/songcard/cardsong'
-
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchGenreTrack, fetchSingleGenre } from '../actions/genre/genreaction'
-// import { getlocation } from '../actions/auth'
+import Tracksquare from '../components/track/tracksquare'
+
 
 const SingleGenre=({user,access,getlocation})=>{
-    // getlocation()
-    // const [song,setsong]=useState([])
-    // const [genre,setGenre]=useState([])
+
     const params=useParams()
     const dispatch=useDispatch()
     const {genre,tracks}=useSelector((state)=>state.genre)
       
-
-    // let getgenre=async()=>{
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `JWT ${access}`,
-    //             'Accept': 'application/json'
-    //         }
-    //     };
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/genre/${params.id}/`, config);
-    //         setGenre(res.data)
-    //     } catch (err) {
-    //         console.log('something went wrong')
-    //     }   
-    // }
-
-    // let getsong=async()=>{
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `JWT ${access}`,
-    //             'Accept': 'application/json'
-    //         }
-    //     };
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/getgenresong/${params.id}/`, config);
-    //         setsong(res.data)
-    //     } catch (err) {
-    //         console.log('something went wrong')
-    //     }   
-    // }
-    
     useEffect(()=>{
-        // getgenre()
-        // getsong()
         dispatch(fetchSingleGenre(params.id))
         dispatch(fetchGenreTrack(params.id))
     },[])
@@ -66,16 +26,12 @@ const SingleGenre=({user,access,getlocation})=>{
         </div>
         <div className="  py-1 md:px-6 md:py-3 lg:px-6 lg:py-3 box-content h-auto">
         <div className="w-full flex flex-wrap">
-                    {tracks.map((song)=>(
-                        // <Link to={`/song/${songs.id}`} >
-                          <div className='p-2 w-36 md:w-48 lg:w-48'>
-                              <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={song.picture.url} className='h-auto w-full shadow mb-2'/>
-                                <h1 className='text-white text-sm md:text-md lg:text-md tracking-wide font-semibold'>{song.name}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide lg:pb-1'>Song</h2>   
-                              </div>
-                          </div>
-                        // </Link>
+                    {tracks.map((song,index)=>(
+                        <div key={index}>
+                            <Tracksquare song={song} index={index}/>
+                        </div>
+                          
+                    
                     ))}
         </div>
             <br/>
