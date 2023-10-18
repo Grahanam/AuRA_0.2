@@ -36,7 +36,7 @@ let createplaylist=()=>{
     return(
         <>
         {token?<>
-          <div className="px-1 py-1 md:px-3 md:py-2 lg:px-6 lg:py-3 bg-gradient-to-b from-purple-700 box-content h-auto">
+          <div className="px-1 min-h-full py-1 md:px-3 md:py-2 lg:px-6 lg:py-3 bg-gradient-to-b from-purple-700 box-content h-auto">
             <div className="w-full ">
                         <div className='p-3 md:p-4 lg:p-5 w-[100%]'>
                             
@@ -82,13 +82,8 @@ let createplaylist=()=>{
                   <i ><FontAwesomeIcon icon={faMusic} className="mt-10 text-white text-md md:text-xl lg:text-xl"/></i>
                   <h1 className='text-2xl md:text-3xl lg:text-3xl my-4 font-semibold text-white tracking-wide'>Sign-in to create your playlist</h1>
                   <h1 className='text-md text-center md:text-xl lg:text-xl font-medium text-white tracking-wide pb-5'>TuneYourAura.</h1>
-                  {/* <Link to="/search" className="" activeClassName="active" >
-                  <button className='text-m font-semibold tracking-wide text-black py-3 px-6 bg-white rounded-full '>Find artists</button>
-                  </Link> */}
                 </div>
         </>}
-          
-
       </>)}
 
 export default Playlist
