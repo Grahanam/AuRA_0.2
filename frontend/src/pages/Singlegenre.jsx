@@ -30,8 +30,6 @@ const SingleGenre=({user,access,getlocation})=>{
                         <div key={index}>
                             <Tracksquare song={song} index={index}/>
                         </div>
-                          
-                    
                     ))}
         </div>
             <br/>
