@@ -12,15 +12,16 @@ import { faPlay, faPodcast} from '@fortawesome/free-solid-svg-icons'
 import { fetchTracks } from '../actions/track/trackaction'
 import Track from '../components/track/track'
 import { loadmusic } from '../features/player/playerSlice'
+import { Spinner } from 'flowbite-react'
 
 
 const Home=({getlocation,access})=>{
     let [artist,setartist]=useState([])
     let [track,settrack]=useState([])
     let [greeting,setgreeting]=useState([])
-    const {artists,loading,error} = useSelector((state) => state.artist)
-    const {albums} = useSelector((state) => state.album)
-    const {tracks} = useSelector((state) => state.track)
+    const {artists,artistsloading,artistserror} = useSelector((state) => state.artist)
+    const {albums,albumsloading,albumserror} = useSelector((state) => state.album)
+    const {tracks,tracksloading,trackserror} = useSelector((state) => state.track)
 
     const dispatch = useDispatch()
     const loadtrackandqueue=(track)=>{
@@ -83,11 +84,15 @@ const Home=({getlocation,access})=>{
 
 
     return(
+        <>
+        {!tracksloading&&!artistsloading&&!albumsloading?<>
+        
+        
         <div className="px-2 py-2 md:px-6 lg:px-6  md:py-3 lg:py-3 ">
             <div className='text-2xl md:text-4xl lg:text-4xl text-semibold text-white'>{greeting}</div>
-        <br/>
+            <br/>
         <div className='columns-1 md:columns-2 lg:columns-2 pb-6'>
-            {tracks.map((track,index)=>(
+                {tracks.map((track,index)=>(
                 <div key={index} className="w-full mb-2">
                 <div onClick={()=>loadtrackandqueue(track)} className=' w-full hover:cursor-pointer '>
                     <div className='group rounded-lg shadow-md bg-neutral-800 hover:bg-neutral-700 transition delay-150 hover:bg-light'>
@@ -109,10 +114,8 @@ const Home=({getlocation,access})=>{
                     </div>
                 </div>
             </div>
-                // <div key={index}>
-                //      <Track song={track}/>
-                // </div>
             ))}
+            
             
 
         </div>
@@ -165,61 +168,15 @@ const Home=({getlocation,access})=>{
         
         
         </>}
-        
-        
-       
-        {/* {access?(
-            <>
-            <div className=" flex items-center justify-between">
-            <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Songs for you</h1>
-            </div>
-            <div className="w-full flex flex-row overflow-x-auto">
-                    {track.map((song)=>(
-                        <Link to={`/song/${song.id}`} >
-                          <div className='p-2 w-48'>
-                              <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={song.img} className='h-auto w-full shadow mb-2'/>
-                                <h1 className='text-white text-md tracking-wide font-semibold'>{song.title}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide pb-1'>Song</h2>   
-                              </div>
-                          </div>
-                        </Link>
-                    ))}
-            </div>
-            <div className=" flex items-center justify-between">
-            <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Artist you may like</h1>
-            </div>
-            <div className="w-full flex flex-row overflow-x-auto">
-                    {artist.map((artists)=>(
-                        <Link to={`/artist/${artists.id}`} >
-                          <div className='p-2 w-48'>
-                              <div className='bg-dark w-full h-auto p-5 rounded-lg shadow-md hover:bg-light'>
-                                <img src={artists.img} className='h-auto w-full shadow mb-2'/>
-                                <h1 className='text-white text-md tracking-wide font-semibold'>{artists.name}</h1>
-                                <h2 className='text-xs text-lightest tracking-wide pb-1'>Artist</h2>   
-                              </div>
-                          </div>
-                        </Link>
-                    ))}
-            </div>
-         </>
-        ):(
-            <div className='w-full h-full flex items-center justify-center'>
-            <div className='flex  items-center'>
-                <i ><FontAwesomeIcon icon={faPodcast} className="text-white text-4xl md:text-7xl lg:text-7xl"/></i>
-                <h1 className='p-2 text-xl font-bold text-white tracking-wide'>Tune your Aura</h1>
-            </div>
-            </div>
-        )} */}
               
      </div>
+     </>:<>
+        <div className='h-[100%] w-full flex items-center justify-center'>
+            <Spinner color="info" aria-label="Info spinner example"/>
+        </div>
+     </>}
+     </>
     )
 }
 
-// const mapStateToProps = state=>({
-//     location:state.auth.location,
-//     access:state.auth.access
-// })
-
-// export default connect(mapStateToProps,{getlocation})(Home)
 export default Home

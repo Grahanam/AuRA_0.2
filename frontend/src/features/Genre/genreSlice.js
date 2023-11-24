@@ -6,8 +6,8 @@ export const genreSlice=createSlice({
     initialState:{
         genres:[],
         genre:{},
-        loading:false,
-        error:null,
+        genresloading:false,
+        genreserror:null,
         singleloading:false,
         singleerror:false,
         tracks:[],
@@ -35,16 +35,16 @@ export const genreSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchGenres.pending,(state)=>{
-            state.loading=true
-            state.error=null
+            state.genresloading=true
+            state.genreserror=null
         })
         .addCase(fetchGenres.fulfilled,(state,action)=>{
-            state.loading=false
+            state.genresloading=false
             state.genres=action.payload;
         })
         .addCase(fetchGenres.rejected,(state,action)=>{
-            state.loading=false
-            state.error=action.error.message;
+            state.genresloading=false
+            state.genreserror=action.error.message;
         })
 
         .addCase(fetchSingleGenre.pending,(state)=>{

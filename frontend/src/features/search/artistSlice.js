@@ -8,8 +8,8 @@ export const artistSlice=createSlice({
         tracks:[],
         tracksloading:false,
         trackserror:null,
-        loading:false,
-        error:null,
+        artistsloading:false,
+        artistserror:null,
         artist:{},
         singleloading:false,
         singleerror:null
@@ -35,16 +35,16 @@ export const artistSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchArtists.pending,(state)=>{
-            state.loading=true
-            state.error=null
+            state.artistsloading=true
+            state.artistserror=null
         })
         .addCase(fetchArtists.fulfilled,(state,action)=>{
-            state.loading=false
+            state.artistsloading=false
             state.artists=action.payload;
         })
         .addCase(fetchArtists.rejected,(state,action)=>{
-            state.loading=false
-            state.error=action.error.message;
+            state.artistsloading=false
+            state.artistserror=action.error.message;
         })
 
         .addCase(fetchSingleArtist.pending,(state)=>{

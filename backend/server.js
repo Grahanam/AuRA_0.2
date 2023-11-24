@@ -18,17 +18,23 @@ const genreRoute=require('./routes/genreRoute')
 const playlistRoute=require('./routes/playlistRoute')
 const albumRoute=require('./routes/albumRoute')
 
+app.use(express.static(path.join(__dirname,'dist')))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 
 //Routers
-app.use('/',UserRoute)
-app.use('/track',trackRoute)
-app.use('/genre',genreRoute)
-app.use('/artist',artistRoute)
-app.use('/playlist',playlistRoute)
-app.use('/album',albumRoute)
+app.use('api/',UserRoute)
+app.use('api/track',trackRoute)
+app.use('api/genre',genreRoute)
+app.use('api/artist',artistRoute)
+app.use('api/playlist',playlistRoute)
+app.use('api/album',albumRoute)
+
+//frontend Static page
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'dist','index.html'))
+})
 
 //starting server  
 app.listen(port,()=>{

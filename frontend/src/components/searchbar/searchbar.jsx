@@ -23,10 +23,10 @@ const Searchbar = ()=>{
     }
     return(
     <>
-      <div className="flex  bg-white rounded-full ml-3 p-2">
+      <div className="flex items-center bg-white rounded-full ml-3 pl-2">
       <i><FontAwesomeIcon className="mx-1 text-black text-sm md:mx-2 lg:mx-2 text-" icon={faSearch}/></i>
         <form >
-        <input type="text" id="search" className="w-56 md:w-56 bg-white text-black lg:w-56 border-0 outline-0" placeholder="What do you want to listen to?" value={searchquery} onChange={inputEvent}/>
+        <input type="text" id="search" className="w-56 md:w-56 bg-white rounded-full text-black border-none focus:outline-none focus:ring-transparent lg:w-56 border-0 outline-0" placeholder="What do you want to listen to?" value={searchquery} onChange={inputEvent}/>
         {/* <button type="submit">search</button> */}
         
         </form>

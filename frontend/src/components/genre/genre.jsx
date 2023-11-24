@@ -6,11 +6,12 @@ import { Link } from "react-router-dom"
 
 import { useDispatch,useSelector } from "react-redux"
 import { fetchGenres } from "../../actions/genre/genreaction"
+import { Spinner } from "flowbite-react"
 
 
 const Genre=({access})=>{
 
-    const {genres,loading,error}=useSelector((state)=>state.genre)
+    const {genres,genresloading,genreserror}=useSelector((state)=>state.genre)
     const dispatch=useDispatch()
     // const [genre,setgenre]=useState([])
     
@@ -38,9 +39,11 @@ const Genre=({access})=>{
 
     return(
         <>
+        {!genresloading?<>
+        
+        
         
            <div className='px-1 py-1 md:px-6 md:py-3 lg:px-6 lg:py-3'>
-           {/* <h1 className="text-white">{loading},{error}</h1> */}
                 <div>
                     <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">Browse All</h1>
                 </div>
@@ -58,7 +61,11 @@ const Genre=({access})=>{
                     }
                 </div>
             </div>
-            
+            </>:<>
+                <div className='h-[100%] w-full flex items-center justify-center'>
+                    <Spinner color="info" aria-label="Info spinner example"/>
+                </div>
+            </>}
         </>
     )
 }
