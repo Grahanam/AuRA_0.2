@@ -24,12 +24,12 @@ app.use(express.json())
 app.use(cors())
 
 //Routers
-app.use('api/',UserRoute)
-app.use('api/track',trackRoute)
-app.use('api/genre',genreRoute)
-app.use('api/artist',artistRoute)
-app.use('api/playlist',playlistRoute)
-app.use('api/album',albumRoute)
+app.use('/api/',UserRoute)
+app.use('/api/track',trackRoute)
+app.use('/api/genre',genreRoute)
+app.use('/api/artist',artistRoute)
+app.use('/api/playlist',playlistRoute)
+app.use('/api/album',albumRoute)
 
 //frontend Static page
 app.get('*',(req,res)=>{
