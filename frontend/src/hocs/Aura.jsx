@@ -1,36 +1,39 @@
-import {Route,Routes} from 'react-router-dom'
-import Home from '../pages/Home'
-import Playlist from '../pages/Playlist'
-import Sidebar from '../components/sidebar/Sidebar'
-import Topbar from '../containers/topbar/topbar'
-import Search from '../pages/Search'
-import Musicplayer from '../containers/musicplayer/musicplayer'
-import Singleplaylist from '../pages/Singleplaylist'
-import SingleArtist from '../pages/Singleartist'
-import SingleGenre from '../pages/Singlegenre'
-import SingleAlbum from '../pages/Singlealbum'
-import Mobilebar from '../containers/mobilebar/mobilebar'
-import Footer from '../components/footer/Footer'
+import { Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import Playlist from "../pages/Playlist";
+import Sidebar from "../components/sidebar/Sidebar";
+import Topbar from "../containers/topbar/topbar";
+import Search from "../pages/Search";
+import Musicplayer from "../containers/musicplayer/musicplayer";
+import Singleplaylist from "../pages/Singleplaylist";
+import SingleArtist from "../pages/Singleartist";
+import SingleGenre from "../pages/Singlegenre";
+import SingleAlbum from "../pages/Singlealbum";
+import Mobilebar from "../containers/mobilebar/mobilebar";
+import Footer from "../components/footer/Footer";
+import Jam from "../pages/Jam";
+import OnJam from "../pages/OnJam";
 
-const  Aura=()=>{
-    return(
-        <>
-        <div className="bg-dark h-screen">
-        
+const Aura = () => {
+  return (
+    <>
+      <div className="bg-dark h-screen">
         <div className="flex h-[100vh] md:h-[88vh] lg:h-[88vh]">
-         <Sidebar/>
-         <div className='w-full h-full overflow-y-scroll'>
-           <Topbar/>
-           
+          <Sidebar />
+          <div className="w-full h-full overflow-y-scroll">
+            <Topbar />
+
             <Routes>
-              <Route path="/" exact element={<Home/>}/>
-              <Route path='/search' element={<Search/>}/>
-              <Route path="/playlist" exact element={<Playlist/>}/>
-              <Route path="/playlist/:id" exact element={<Singleplaylist/>}/>
-              <Route path="/artist/:id" exact element={<SingleArtist/>}/>
-              <Route path="/genre/:id" exact element={<SingleGenre/>}/>
-              <Route path="/album/:id" exact element={<SingleAlbum/>}/>
-              
+              <Route path="/" exact element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/playlist" exact element={<Playlist />} />
+              <Route path="/playlist/:id" exact element={<Singleplaylist />} />
+              <Route path="/artist/:id" exact element={<SingleArtist />} />
+              <Route path="/genre/:id" exact element={<SingleGenre />} />
+              <Route path="/album/:id" exact element={<SingleAlbum />} />
+              <Route path="/jam" exact element={<Jam />} />
+              <Route path="/onjam/:jamId" exact element={<OnJam />} />
+
               {/* <Route path="/search" exact element={<PrivateRoute><Search/></PrivateRoute>}/>
               <Route path="/yourlibrary" exact element={<PrivateRoute><YourLibrary/></PrivateRoute>}/>
               <Route path="/like" exact element={<PrivateRoute><Like/></PrivateRoute>}/>
@@ -41,21 +44,17 @@ const  Aura=()=>{
               <Route path="/song/:id" exact element={<PrivateRoute><SingleSong/></PrivateRoute>}/>
               <Route path="/profile" exact element={<PrivateRoute><Profile/></PrivateRoute>}/> 
               <Route path="/user" exact element={<PrivateRoute><User/></PrivateRoute>}/> */}
-              
-              
             </Routes>
-            <Footer/>
-         </div>
-        </div> 
-         {/* music player */}
-         <Musicplayer/>
+            <Footer />
+          </div>
+        </div>
+        {/* music player */}
+        <Musicplayer />
         {/* <div className="w-full h-[12vh] bg-light"></div> */}
-         <Mobilebar/>
-      
+        <Mobilebar />
       </div>
-        </>
-    )
-}
+    </>
+  );
+};
 
-
-export default Aura
+export default Aura;

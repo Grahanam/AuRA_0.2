@@ -72,7 +72,7 @@ const Singleplaylist = () => {
 
   useEffect(() => {
     dispatch(fetchSinglePlaylist(params.id));
-  }, [search, token]);
+  }, [token]);
   return (
     <>
       <div className="border-lightest border-b-2">
