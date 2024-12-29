@@ -9,6 +9,7 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 const jamModel = require("../models/jamModel");
+const jamConnectorModel = require("../models/jamConnectorModel");
 
 //firebase
 const UUID = require("uuid-v4");
@@ -16,6 +17,7 @@ const bucket = require("../firebaseadmin");
 const admin = require("firebase-admin");
 const uploadFile = require("../firebasestorage/upload");
 const trackModel = require("../models/trackModel");
+const { connection } = require("mongoose");
 
 //Create jam
 router.post("/", async (req, res) => {
@@ -145,11 +147,21 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const jam = await jamModel.find({ user: req.params.id });
-    console.log("check this line");
-    console.log(req.params.id, jam);
-    res.status(200).json({ data: jam, message: "success" });
+    let connector = await jamConnectorModel
+      .findOne({ user: req.params.id })
+      .populate("jam");
+    if (!connector) {
+      connector = new jamConnectorModel({
+        user: req.params.id,
+        jam: [],
+      });
+      connector = await connector.save();
+    }
+    res
+      .status(200)
+      .json({ data: { jam: jam, connector: connector }, message: "success" });
   } catch (err) {
-    // console.log(err)
+    console.log(err);
     res.status(500).json({ data: err, message: "Internal Server Error!" });
   }
 });

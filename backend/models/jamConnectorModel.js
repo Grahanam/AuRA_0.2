@@ -5,10 +5,12 @@ const jamConnectorSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  jam: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Jam",
-  },
+  jam: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Jam",
+    },
+  ],
 });
 
 module.exports = mongoose.model("JamConnector", jamConnectorSchema);

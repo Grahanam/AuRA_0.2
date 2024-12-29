@@ -57,21 +57,77 @@ const jamModel = require("./models/jamModel");
 const jamConnectorModel = require("./models/jamConnectorModel");
 
 const jamUsers = {};
+const userSocketMap = {};
 
 io.on("connection", (socket) => {
+  const userId = socket.handshake.query.user;
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+  }
+
   console.log("New client connected:", socket.id);
 
-  socket.on("create-jam", ({ jamId, jam }) => {
+  socket.on("create-jam", async (jam, callback) => {
     try {
-      const jam = new jamModel({
+      const newJam = new jamModel({
         title: jam.title,
-        user: jam.userid,
+        user: jam.user,
         tracks: [],
         users: jam.users,
       });
-      jam.save();
+      await newJam.save();
+      console.log(newJam);
+      console.log(userSocketMap);
+      for (let x of jam.users) {
+        if (x in userSocketMap) {
+          console.log("user found", x);
+          let connector = await jamConnectorModel.findOne({
+            user: x,
+          });
+          if (!connector) {
+            connector = new jamConnectorModel({
+              user: req.params.id,
+              jam: [newJam._id],
+            });
+            connector = await connector.save();
+          } else {
+            connector.jam.push(newJam._id);
+            await connector.save();
+          }
+          io.to(userSocketMap[x]).emit("jam-connector", newJam);
+        } else {
+          let connector = await jamConnectorModel.findOne({
+            user: x,
+          });
+          if (!connector) {
+            connector = new jamConnectorModel({
+              user: req.params.id,
+              jam: [newJam._id],
+            });
+            connector = await connector.save();
+            io.to(userSocketMap[x]).emit("jam-connector", newJam);
+          } else {
+            if (!connector.jam.includes(newJam._id)) {
+              connector.jam.push(newJam._id); // Add only if it's not already present
+              await connector.save();
+              io.to(userSocketMap[x]).emit("jam-connector", newJam);
+            } else {
+              console.log("Jam already connected for this user.");
+            }
+          }
+        }
+      }
+      // Send a success response with the created jam's ID
+      callback({
+        success: true,
+        id: newJam._id,
+      });
     } catch (error) {
       console.log(error, "error creating jam");
+      callback({
+        success: false,
+        error: error.message,
+      });
     }
   });
 
@@ -157,17 +213,62 @@ io.on("connection", (socket) => {
     io.in(jamId).emit("added-tracks", jam.tracks);
   });
 
+  socket.on("add-user", async ({ jam, nuser }) => {
+    console.log("shit");
+    console.log(nuser, jam);
+    try {
+      if (nuser._id in userSocketMap) {
+        let connector = await jamConnectorModel.findOne({
+          user: nuser._id,
+        });
+        if (!connector) {
+          connector = new jamConnectorModel({
+            user: nuser._id,
+            jam: [jam._id],
+          });
+          connector = await connector.save();
+        } else {
+          if (!connector.jam.includes(jam._id)) {
+            connector.jam.push(jam._id); // Add only if it's not already present
+            await connector.save();
+            io.to(userSocketMap[nuser._id]).emit("jam-connector", jam);
+          } else {
+            console.log("Jam already connected for this user.");
+          }
+        }
+      } else {
+        let connector = await jamConnectorModel.findOne({
+          user: nuser._id,
+        });
+        if (!connector) {
+          connector = new jamConnectorModel({
+            user: nuser._id,
+            jam: [jam._id],
+          });
+          connector = await connector.save();
+          io.to(userSocketMap[nuser._id]).emit("jam-connector", jam);
+        } else {
+          if (!connector.jam.includes(jam._id)) {
+            connector.jam.push(jam._id); // Add only if it's not already present
+            await connector.save();
+            io.to(userSocketMap[nuser._id]).emit("jam-connector", jam);
+          } else {
+            console.log("Jam already connected for this user.");
+          }
+        }
+      }
+    } catch (error) {}
+  });
+
   socket.on("add-track", async ({ jamId, track }) => {
     try {
       // Check if the jam exists
-      console.log(jamId);
       const jam = await jamModel.findById(jamId).populate("tracks");
       if (!jam) {
         socket.emit("error", { message: "Jam not found" });
         console.log(`Jam ${jamId} not found.`);
         return;
       }
-
       // Add the track to the jam's playlist
       jam.tracks.push(track);
       await jam.save(); // Save updated jam to the database
@@ -271,6 +372,7 @@ io.on("connection", (socket) => {
         }))
       );
     }
+    delete userSocketMap[userId];
     console.log("User disconnected");
   });
 });

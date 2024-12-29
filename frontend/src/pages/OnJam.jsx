@@ -19,11 +19,15 @@ import {
 import { getquery } from "../features/Jam/jamSlice";
 import { fetchSingleJam } from "../actions/jam/jamaction";
 import { loadPlaylistSong } from "../features/player/playerSlice";
+import { fetchUserSearch } from "../actions/user/useraction";
+import { getqueryUser, setUserSearchEmpty } from "../features/User/userSlice";
 
 const OnJam = () => {
   const { jamId } = useParams();
   const { users, setUsers } = useState([]);
   const { search, tracks, playlist, jam } = useSelector((state) => state.jam);
+  const [jamUser, setJamUser] = useState([]);
+  const { userSearch, usearch, user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth);
   //   const { search } = useLocation();
   //   const { token } = useSelector((state) => state.auth);
@@ -44,6 +48,36 @@ const OnJam = () => {
     dispatch(getquery(data));
     if (data.length > 0) {
       dispatch(fetchTrackSearch(data));
+    }
+  };
+
+  const inputEventUser = (e) => {
+    const data = e.target.value;
+    dispatch(getqueryUser(data));
+    if (data.length > 0) {
+      dispatch(fetchUserSearch(data));
+    } else {
+      dispatch(setUserSearchEmpty());
+    }
+  };
+
+  const addUser = (nuser) => {
+    console.log(nuser);
+    dispatch(getqueryUser(""));
+    dispatch(setUserSearchEmpty());
+    let found = false;
+    if (jam.user == nuser._id) {
+      found = true;
+    }
+    for (let i of jam.users) {
+      if (i == nuser._id) {
+        found = true;
+        break;
+      }
+    }
+    if (found == false) {
+      console.log("add user request send");
+      socket.emit("add-user", { jam, nuser });
     }
   };
 
@@ -160,6 +194,63 @@ const OnJam = () => {
             </div>
           ))}
         </div>
+        {token.userid == jam.user ? (
+          <>
+            <h1 className="text-xl md:text-3xl lg:text-3xl font-extrabold tracking-wide pb-2 md:pb-3 lg:pb-5 text-black">
+              <input
+                type="text"
+                name="title"
+                placeholder="Search User"
+                value={usearch}
+                onChange={inputEventUser}
+              />
+            </h1>
+            <div className="w-full h-3">
+              <div className=" absolute bg-black rounded">
+                {userSearch.map((data, index) => {
+                  if (data._id == user._id) {
+                    return <div key={index}></div>;
+                  }
+                  return (
+                    <div
+                      key={index}
+                      className="p-1 w-full h-10 flex justify-between  items-center"
+                    >
+                      <div className="p-1 rounded-lg shadow-md w-full">
+                        <div className="flex flex-wrap">
+                          <img
+                            className="h-7 w-auto shadow mr-1"
+                            src={data.picture}
+                            alt=""
+                          />
+                          <div className=" flex items-center justify-center items-start">
+                            <h1 className="text-m font-semibold text-white tracking-wide">
+                              {data.fullname}
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => addUser(data)}
+                        className="text-white font-semibold border rounded px-2"
+                      >
+                        <i>
+                          <FontAwesomeIcon
+                            icon={faPlus}
+                            className="text-white text-72xl"
+                          />
+                        </i>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className=" flex items-center justify-between pb-2">
           <h1 className="pl-2 text-xl md:text-2xl lg:text-2xl font-semibold text-white tracking-wider hover:underline ">
             Jam Playlist

@@ -11,21 +11,21 @@ const cookie = new Cookie();
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: {},
     userSearch: [],
     userId: "",
     gId: "",
     mainId: "",
     picture: "",
-    search: "",
+    usearch: "",
     loading: false,
     error: null,
     userloading: false,
     usererror: null,
   },
   reducers: {
-    getquery: (state, action) => {
-      state.search = action.payload;
+    getqueryUser: (state, action) => {
+      state.usearch = action.payload;
     },
     setUserSearchEmpty: (state, action) => {
       state.userSearch = [];
@@ -64,7 +64,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { removeUserData, getquery, setUserSearchEmpty } =
+export const { removeUserData, getqueryUser, setUserSearchEmpty } =
   userSlice.actions;
 
 export default userSlice.reducer;

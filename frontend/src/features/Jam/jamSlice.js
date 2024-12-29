@@ -13,6 +13,7 @@ export const jamSlice = createSlice({
     jam: {},
     jams: [],
     playlist: {},
+    jamConnector: {},
     playlistloading: false,
     playlisterror: null,
     playlists: [],
@@ -28,6 +29,9 @@ export const jamSlice = createSlice({
   reducers: {
     getquery: (state, action) => {
       state.search = action.payload;
+    },
+    updateJamConnector: (state, action) => {
+      state.jamConnector.jam.push(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -51,7 +55,9 @@ export const jamSlice = createSlice({
       })
       .addCase(fetchJam.fulfilled, (state, action) => {
         state.loading = false;
-        state.jams = action.payload;
+        console.log(action.payload);
+        state.jams = action.payload.jam;
+        state.jamConnector = action.payload.connector;
       })
       .addCase(fetchJam.rejected, (state, action) => {
         state.loading = false;
@@ -86,6 +92,6 @@ export const jamSlice = createSlice({
   },
 });
 
-export const { getquery } = jamSlice.actions;
+export const { getquery, updateJamConnector } = jamSlice.actions;
 
 export default jamSlice.reducer;

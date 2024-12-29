@@ -10,45 +10,99 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchUserSearch } from "../actions/user/useraction";
-import { getquery, setUserSearchEmpty } from "../features/User/userSlice";
+import { getqueryUser, setUserSearchEmpty } from "../features/User/userSlice";
 import { io } from "socket.io-client";
 import { fetchJam } from "../actions/jam/jamaction";
+import { updateJamConnector } from "../features/Jam/jamSlice";
 
 const Jam = () => {
   const { token } = useSelector((state) => state.auth);
   const [socket, setSocket] = useState(null);
   const [title, setTitle] = useState("");
-  const { userSearch, search, user } = useSelector((state) => state.user);
-  const { jams } = useSelector((state) => state.jam);
+  const { userSearch, usearch, user } = useSelector((state) => state.user);
+  const [jamUser, setJamUser] = useState([]);
+  const { jams, jamConnector } = useSelector((state) => state.jam);
   const { addedUsers, setAddedUsers } = useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  let createJam = () => {
+    const userids = [];
+    for (let x of jamUser) {
+      userids.push(x._id);
+    }
+    const jam = {
+      title: title,
+      user: user._id,
+      users: userids,
+    };
+    socket.emit("create-jam", jam, (response) => {
+      if (response && response.success) {
+        // Navigate to the new jam route with the returned ID
+        navigate(`/onjam/${response.id}`);
+      } else {
+        console.error("Error creating jam:", response.error || "Unknown error");
+      }
+    });
+  };
+
+  const addUser = (nuser) => {
+    dispatch(getqueryUser(""));
+    dispatch(setUserSearchEmpty());
+    const arr = jamUser;
+    let found = false;
+    for (let i of arr) {
+      if (i._id == nuser._id) {
+        found = true;
+        break;
+      }
+    }
+    if (found == false) {
+      arr.push(nuser);
+    }
+    setJamUser(arr);
+  };
+
   const inputEvent = (e) => {
     const data = e.target.value;
-    dispatch(getquery(data));
+    dispatch(getqueryUser(data));
     if (data.length > 0) {
       dispatch(fetchUserSearch(data));
     } else {
       dispatch(setUserSearchEmpty());
     }
   };
-  // const session_id = 123456;
+
   useEffect(() => {
-    const socketInstance = io("http://localhost:4000");
-    //socket intialization
-    setSocket(socketInstance);
-    if ("_id" in user) {
-      dispatch(fetchJam(user._id));
+    if (token?.userid) {
+      const socketInstance = io("http://localhost:4000", {
+        query: { user: token.userid },
+      });
+      //socket intialization
+      setSocket(socketInstance);
+
+      // socketInstance.on("jam-connectors", handleJamConnector);
+      socketInstance.on("jam-connector", (newJam) => {
+        console.log("Received new jam:", newJam);
+        dispatch(updateJamConnector(newJam));
+      });
+      return () => {
+        socketInstance.disconnect();
+      };
+    } else {
+      return () => {};
     }
+  }, [token]);
 
-    return () => {
-      socketInstance.disconnect();
-    };
-  }, []);
+  useEffect(() => {
+    // console.log(token);
+    if (token?.userid) {
+      dispatch(fetchJam(token.userid));
+    }
+  }, [token]);
 
-  console.log(jams);
+  console.log(jamConnector);
 
   return (
     <>
@@ -75,7 +129,7 @@ const Jam = () => {
                   </div>
                   {/* <img src='https://m.media-amazon.com/images/I/71a37QykgSL._SY355_.jpg' alt="cover" className='h-56 w-auto'/> */}
                   <div className=" lg:ml-2 flex flex-col justify-end md:p-1 lg:p-1">
-                    {/* <form onSubmit={createplaylist}> */}
+                    {/* <form onSubmit={createJam}> */}
                     <h1 className="text-sm md:text-3xl lg:text-3xl font-semibold text-white tracking-wide">
                       Create New Jam
                     </h1>
@@ -97,61 +151,86 @@ const Jam = () => {
                         type="text"
                         name="title"
                         placeholder="Search User"
-                        value={search}
+                        value={usearch}
                         onChange={inputEvent}
-                        required
                       />
                     </h1>
                     <div className="w-full h-3">
                       <div className=" absolute bg-black rounded">
-                        {userSearch.map((user) => (
-                          <div className="p-2 w-full h-10 flex justify-between  items-center">
-                            <div className="p-3 rounded-lg shadow-md w-full">
-                              <div className="flex flex-wrap">
-                                <img
-                                  className="h-14 w-auto shadow"
-                                  src={user.picture}
-                                  alt=""
-                                />
-                                <div className=" flex items-center justify-center items-start">
-                                  <h1 className="text-m font-semibold text-white tracking-wide">
-                                    {user.fullname}
-                                  </h1>
+                        {userSearch.map((data, index) => {
+                          if (data._id == user._id) {
+                            return <div key={index}></div>;
+                          }
+                          return (
+                            <div
+                              key={index}
+                              className="p-1 w-full h-10 flex justify-between  items-center"
+                            >
+                              <div className="p-1 rounded-lg shadow-md w-full">
+                                <div className="flex flex-wrap">
+                                  <img
+                                    className="h-7 w-auto shadow mr-1"
+                                    src={data.picture}
+                                    alt=""
+                                  />
+                                  <div className=" flex items-center justify-center items-start">
+                                    <h1 className="text-m font-semibold text-white tracking-wide">
+                                      {data.fullname}
+                                    </h1>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            {/* <form onSubmit={updateplaylist}> */}
+                              {/* <form onSubmit={updateplaylist}> */}
 
-                            <button
-                              onClick={() => updateplaylist(user._id)}
-                              className="text-white font-semibold border rounded px-2"
-                            >
-                              <i>
-                                <FontAwesomeIcon
-                                  icon={faPlus}
-                                  className="text-white text-72xl "
-                                />
-                              </i>
-                            </button>
-                            {/* </form> */}
-                          </div>
-                        ))}
+                              <button
+                                onClick={() => addUser(data)}
+                                className="text-white font-semibold border rounded px-2"
+                              >
+                                <i>
+                                  <FontAwesomeIcon
+                                    icon={faPlus}
+                                    className="text-white text-72xl"
+                                  />
+                                </i>
+                              </button>
+                              {/* </form> */}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
                       {/* <h2 className='text-sm text-lightest tracking-wide '><input type='text' name='username' value={`${user.id}`} hidden></input></h2> */}
-                      <button
-                        // onClick={createplaylist}
-                        className="text-white font-semibold border rounded px-2"
-                      >
-                        <i>
-                          Start Jam{" "}
-                          <FontAwesomeIcon
-                            icon={faAnglesRight}
-                            className="text-white text-72xl "
-                          />
-                        </i>
-                      </button>
+
+                      <div className="w-full flex flex-row overflow-x-auto pb-6">
+                        {jamUser.map((user, index) => (
+                          <div key={index}>
+                            <div className="pr-4">
+                              <div
+                                className={`h-10 w-10 rounded-full border border-2  hover:cursor-pointer border-gray-900 p-1`}
+                              >
+                                <img
+                                  className="rounded-full w-full h-full"
+                                  src={user?.picture}
+                                  alt="profile img"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        <button
+                          onClick={createJam}
+                          className="text-white font-semibold border rounded px-2"
+                        >
+                          <i>
+                            Start Jam{" "}
+                            <FontAwesomeIcon
+                              icon={faAnglesRight}
+                              className="text-white text-72xl "
+                            />
+                          </i>
+                        </button>
+                      </div>
                     </div>
                     {/* </form> */}
                   </div>
@@ -160,15 +239,38 @@ const Jam = () => {
             </div>
             {jams.length > 0 ? (
               <>
+                <h1>Your Jam</h1>
                 {jams.map((jam, index) => (
-                  <Link key={index} to={`/jam/${jam._id}`}>
+                  <Link key={index} to={`/onjam/${jam._id}`}>
                     <div className="md:mb-2 lg:mb-2 p-2 w-full h-14">
                       <div className="rounded-lg shadow-md bg-light hover:md:bg-light">
                         <div className="flex flex-wrap justify-between">
                           <div className="p-2 md:p-4 lg:p-4 items-start">
                             <h1 className="text-md font-semibold text-white tracking-wide">
-                              {/* {playlist.title} */}
-                              jam {index}
+                              {jam.title}
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
+
+            {jamConnector.jam?.length > 0 ? (
+              <>
+                <h1>Jam Connector</h1>
+                {jamConnector?.jam.map((jam, index) => (
+                  <Link key={index} to={`/onjam/${jam._id}`}>
+                    <div className="md:mb-2 lg:mb-2 p-2 w-full h-14">
+                      <div className="rounded-lg shadow-md bg-light hover:md:bg-light">
+                        <div className="flex flex-wrap justify-between">
+                          <div className="p-2 md:p-4 lg:p-4 items-start">
+                            <h1 className="text-md font-semibold text-white tracking-wide">
+                              {jam.title}
                             </h1>
                           </div>
                         </div>
