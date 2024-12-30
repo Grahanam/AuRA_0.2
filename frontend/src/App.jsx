@@ -22,7 +22,6 @@ function App() {
   //       dispatch(fetchSingleUser(token.userid));
   //     }
   //   };
-
   //   initialize();
   // }, [dispatch]);
   useEffect(() => {

@@ -76,7 +76,10 @@ const Jam = () => {
 
   useEffect(() => {
     if (token?.userid) {
-      const socketInstance = io("http://localhost:4000", {
+      // const socketInstance = io("http://localhost:4000", {
+      //   query: { user: token.userid },
+      // });
+      const socketInstance = io({
         query: { user: token.userid },
       });
       //socket intialization
