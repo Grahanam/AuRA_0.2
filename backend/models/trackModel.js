@@ -1,52 +1,58 @@
-const mongoose=require('mongoose')
+const mongoose = require("mongoose");
 
-const trackSchema=new mongoose.Schema({
-    name:{
-        type:String
+const trackSchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+  picture: {
+    url: {
+      type: String,
     },
-    picture:{
-        url:{
-            type:String
-        },
-        filepath:{
-            type:String
-        }
+    filepath: {
+      type: String,
     },
-    audio:{
-        url:{
-            type:String
-        },
-        filepath:{
-            type:String
-        }
+  },
+  audio: {
+    url: {
+      type: String,
     },
-    duration:{
-        type:Number
+    filepath: {
+      type: String,
     },
-    artist:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Artist'
-        }
-    ],
-    genre:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Genre'
-        }
-    ],
-    album:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Album'
+  },
+  duration: {
+    type: Number,
+  },
+  artist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Artist",
     },
-    track_number:{
-        type:Number,
-        default:0
+  ],
+  genre: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Genre",
     },
-    type:{
-        type:String,
-        default:'track'
-    }
-})
+  ],
+  mood: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Mood",
+    },
+  ],
+  album: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Album",
+  },
+  track_number: {
+    type: Number,
+    default: 0,
+  },
+  type: {
+    type: String,
+    default: "track",
+  },
+});
 
-module.exports=mongoose.model('Track',trackSchema)
+module.exports = mongoose.model("Track", trackSchema);

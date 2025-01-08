@@ -22,6 +22,8 @@ const io = new Server(server, {
   },
 });
 
+const data = require("./data.js");
+
 const UserRoute = require("./routes/UserRoute");
 const trackRoute = require("./routes/trackRoute");
 const artistRoute = require("./routes/artistRoute");
@@ -55,6 +57,10 @@ app.get("*", (req, res) => {
 
 const jamModel = require("./models/jamModel");
 const jamConnectorModel = require("./models/jamConnectorModel");
+const artistModel = require("./models/artistModel");
+const trackModel = require("./models/trackModel");
+const genreModel = require("./models/genreModel.js");
+const moodModel = require("./models/moodModel.js");
 
 const jamUsers = {};
 const userSocketMap = {};
@@ -391,3 +397,97 @@ db.on("error", (error) => {
 db.once("open", () => {
   console.log("Connected to MongoDB");
 });
+
+// console.log(data[0].artist);
+
+// (async () => {
+//   for (let song of data) {
+//     let artistdata = [];
+//     let genredata = [];
+//     let mooddata = [];
+//     for (let artist of song.artist) {
+//       try {
+//         const artistcheck = await artistModel.findOne({ name: artist.name });
+//         if (artistcheck) {
+//           artistdata.push(artistcheck._id);
+//         } else {
+//           let url = artist.image ? artist.image : "";
+//           const artistNew = new artistModel({
+//             name: artist.name,
+//             picture: {
+//               url: url,
+//               filepath: "",
+//             },
+//           });
+//           let artistsave = await artistNew.save();
+//           artistdata.push(artistsave._id);
+//         }
+//       } catch (error) {
+//         console.log(error, "error creating artist");
+//       }
+//     }
+
+//     for (let genre of song.genres) {
+//       try {
+//         const genrecheck = await genreModel.findOne({ title: genre });
+//         if (genrecheck) {
+//           genredata.push(genrecheck._id);
+//         } else {
+//           const newGenre = new genreModel({
+//             title: genre,
+//             picture: {
+//               url: "",
+//               filepath: "",
+//             },
+//           });
+//           let genresave = await newGenre.save();
+//           genredata.push(genresave._id);
+//         }
+//       } catch (error) {
+//         console.log(error, "error creating artist");
+//       }
+//     }
+
+//     for (let mood of song.moods) {
+//       try {
+//         const moodcheck = await moodModel.findOne({ title: mood });
+//         if (moodcheck) {
+//           mooddata.push(moodcheck._id);
+//         } else {
+//           const newmood = new moodModel({
+//             title: mood,
+//             picture: {
+//               url: "",
+//               filepath: "",
+//             },
+//           });
+//           let moodsave = await newmood.save();
+//           mooddata.push(moodsave._id);
+//         }
+//       } catch (error) {
+//         console.log(error, "error creating artist");
+//       }
+//     }
+
+//     console.log(artistdata, genredata, mooddata);
+//     const songCheck = await trackModel.findOne({ name: song.song_name });
+//     if (!songCheck) {
+//       const newSong = new trackModel({
+//         name: song.song_name,
+//         artist: artistdata,
+//         genre: genredata,
+//         mood: mooddata,
+//         picture: {
+//           url: song.cover_url,
+//           filepath: "",
+//         },
+//         audio: {
+//           url: song.audio_url,
+//           filepath: "",
+//         },
+//       });
+//       const songSave = await newSong.save();
+//       console.log(songSave);
+//     }
+//   }
+// })();

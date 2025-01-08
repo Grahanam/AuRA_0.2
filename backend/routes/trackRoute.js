@@ -183,10 +183,25 @@ router.delete("/delete/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     let query = null;
+    let track = null;
     if (req.query.q) {
       query = { name: { $regex: req.query.q, $options: "i" } };
+      track = await trackModel.find(query).populate("artist").limit(4);
+    } else {
+      // track = await trackModel.find(query).populate("artist").limit(4);
+      // Fetch random songs when no query is provided
+      track = await trackModel.aggregate([
+        { $sample: { size: 4 } }, // Get 4 random tracks
+        {
+          $lookup: {
+            from: "artists", // The collection name for the artist model
+            localField: "artist",
+            foreignField: "_id",
+            as: "artist",
+          },
+        },
+      ]);
     }
-    const track = await trackModel.find(query).populate("artist").limit(4);
 
     res.status(200).json({ data: track, message: "success" });
   } catch (err) {
